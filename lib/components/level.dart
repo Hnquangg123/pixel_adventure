@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/background_tile.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
@@ -44,7 +45,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
         for (double x = 0; x < numTilesX; x++) {
           final backgroundTile = BackgroundTile(
             color: backgroundColor ?? 'Gray',
-            position: Vector2( x * tileSize, y * tileSize - tileSize),
+            position: Vector2(x * tileSize, y * tileSize - tileSize),
           );
 
           add(backgroundTile);
@@ -83,6 +84,14 @@ class Level extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             add(saw);
+            break;
+          case 'Checkpoint':
+            final checkPoint = Checkpoint(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            
+            add(checkPoint);
             break;
           default:
         }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
+import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/player_hitbox.dart';
@@ -10,7 +11,15 @@ import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-enum PlayerState { idle, running, jumping, falling, hit, appearing }
+enum PlayerState {
+  idle,
+  running,
+  jumping,
+  falling,
+  hit,
+  appearing,
+  disappearing
+}
 
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, KeyboardHandler, CollisionCallbacks {
@@ -36,6 +45,7 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation jumpingAnimation;
   late final SpriteAnimation hitAnimation;
   late final SpriteAnimation appearingAnimation;
+  late final SpriteAnimation disappearingAnimation;
 
   final double _gravity = 9.8;
   final double _jumpForce = 300;
@@ -43,11 +53,11 @@ class Player extends SpriteAnimationGroupComponent
   bool isOnGround = false;
   bool hasJumped = false;
   bool gotHit = false;
+  bool reachedCheckPoint = false;
 
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
-
     startingPosition = Vector2(position.x, position.y);
 
     add(RectangleHitbox(
@@ -60,14 +70,14 @@ class Player extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    if (!gotHit) {
+    if (!gotHit && !reachedCheckPoint) {
       _updatePlayerState();
       _updatePlayerMovement(dt);
       _checkHorizontalCollisions();
       _applyGravity(dt);
       _checkVerticalCollisions();
     }
-    
+
     super.update(dt);
   }
 
@@ -92,8 +102,11 @@ class Player extends SpriteAnimationGroupComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is Fruit) other.collidingWithPlayer();
-    if (other is Saw) _respawn();
+    if (!reachedCheckPoint) {
+      if (other is Fruit) other.collidingWithPlayer();
+      if (other is Saw) _respawn();
+      if (other is Checkpoint && !reachedCheckPoint) _reachedCheckPoint();
+    }
     super.onCollision(intersectionPoints, other);
   }
 
@@ -110,6 +123,8 @@ class Player extends SpriteAnimationGroupComponent
 
     appearingAnimation = _specialSpriteAnimation('Appearing', 7);
 
+    disappearingAnimation = _specialSpriteAnimation('Desappearing', 7);
+
     // List of all animations
     animations = {
       PlayerState.idle: idleAnimation,
@@ -118,6 +133,7 @@ class Player extends SpriteAnimationGroupComponent
       PlayerState.falling: fallingAnimation,
       PlayerState.hit: hitAnimation,
       PlayerState.appearing: appearingAnimation,
+      PlayerState.disappearing: disappearingAnimation,
     };
 
     // Set current animation
@@ -256,9 +272,43 @@ class Player extends SpriteAnimationGroupComponent
             velocity = Vector2.zero();
             position = startingPosition;
             _updatePlayerState();
-            Future.delayed(canMoveDuration, () {
-              gotHit = false;
-            },);
+            Future.delayed(
+              canMoveDuration,
+              () {
+                gotHit = false;
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _reachedCheckPoint() {
+    reachedCheckPoint = true;
+
+    if (scale.x > 0) {
+      position = position - Vector2.all(32);
+    } else if (scale.x < 0) {
+      position = position + Vector2(32, -32);
+    }
+
+    current = PlayerState.disappearing;
+
+    const reachedCheckPointDuration = Duration(milliseconds: 350);
+
+    Future.delayed(
+      reachedCheckPointDuration,
+      () {
+        reachedCheckPoint = false;
+        position = Vector2.all(-640);
+        // removeFromParent();
+
+        const waitToChangeDuration = Duration(seconds: 3);
+        Future.delayed(
+          waitToChangeDuration,
+          () {
+            game.loadNextLevel();
           },
         );
       },
