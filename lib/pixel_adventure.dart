@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
@@ -22,19 +23,22 @@ class PixelAdventure extends FlameGame
   Player player = Player(character: 'Mask Dude');
   late JoystickComponent joystick;
   bool showControls = false;
-  List<String> levelNames = ['Level-01', 'Level-02'];
+  bool playSounds = true;
+  double soundVolume = 1.0;
+  List<String> levelNames = ['Level-01', 'Level-02', 'Level-03', 'Level-04'];
   int currentLevelIndex = 0;
 
   @override
   FutureOr<void> onLoad() async {
     // Load all images into cache
     await images.loadAllImages();
+    // await FlameAudio.audioCache.load('bgm.mp3');
+    FlameAudio.bgm.initialize;
 
     _loadLevel();
 
     if (showControls) {
       addJoyStick();
-      add(JumpButton());
     }
 
     return super.onLoad();
@@ -64,7 +68,9 @@ class PixelAdventure extends FlameGame
       margin: const EdgeInsets.only(left: 32, bottom: 32),
     );
 
-    add(joystick);
+
+    camera.viewport.addAll([joystick, JumpButton()]);
+    // addAll([joystick, JumpButton()]);
   }
 
   void updateJoyStick() {
@@ -94,7 +100,8 @@ class PixelAdventure extends FlameGame
       currentLevelIndex++;
       _loadLevel();
     } else {
-      // no more levels
+      currentLevelIndex = 0;
+      _loadLevel();
     }
   }
 

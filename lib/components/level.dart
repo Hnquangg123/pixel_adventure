@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
+import 'package:pixel_adventure/components/chicken.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/background_tile.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
@@ -20,6 +22,10 @@ class Level extends World with HasGameRef<PixelAdventure> {
   @override
   FutureOr<void> onLoad() async {
     level = await TiledComponent.load("$levelName.tmx", Vector2.all(16));
+
+    if (game.playSounds) {
+      FlameAudio.bgm.play('1-06. Dungeon (Spelunker Theme).mp3', volume: 0.25);
+    }
 
     add(level);
 
@@ -85,6 +91,20 @@ class Level extends World with HasGameRef<PixelAdventure> {
             );
             
             add(checkPoint);
+            break;
+          case 'Enemies':
+            // add chicken
+            final offNeg = spawnPoint.properties.getValue('offNeg');
+            final offPos = spawnPoint.properties.getValue('offPos');
+            final chicken = Chicken(
+              enemyName: spawnPoint.name,
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+              offNeg: offNeg,
+              offPos: offPos,
+            );
+            
+            add(chicken);
             break;
           default:
         }
