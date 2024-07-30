@@ -25,7 +25,12 @@ class PixelAdventure extends FlameGame
   bool showControls = false;
   bool playSounds = true;
   double soundVolume = 1.0;
-  List<String> levelNames = ['Level-01', 'Level-02', 'Level-03', 'Level-04'];
+  List<String> levelNames = [
+    'Level-01',
+    'Level-02',
+    'Level-03',
+    'Level-04',
+  ];
   int currentLevelIndex = 0;
 
   @override
@@ -34,6 +39,7 @@ class PixelAdventure extends FlameGame
     await images.loadAllImages();
     // await FlameAudio.audioCache.load('bgm.mp3');
     FlameAudio.bgm.initialize;
+    FlameAudio.audioCache.loadAll;
 
     _loadLevel();
 
@@ -67,7 +73,6 @@ class PixelAdventure extends FlameGame
       ),
       margin: const EdgeInsets.only(left: 32, bottom: 32),
     );
-
 
     camera.viewport.addAll([joystick, JumpButton()]);
     // addAll([joystick, JumpButton()]);
