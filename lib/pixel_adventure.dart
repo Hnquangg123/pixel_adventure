@@ -5,22 +5,27 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/level.dart';
+import 'package:pixel_adventure/screens/start_screen.dart';
 
 class PixelAdventure extends FlameGame
     with
         HasKeyboardHandlerComponents,
         DragCallbacks,
         HasCollisionDetection,
-        TapCallbacks {
+        TapCallbacks,
+        WidgetsBindingObserver {
   @override
   Color backgroundColor() => const Color(0xFF211f30);
 
-  late CameraComponent cam;
+  late StartScreen startScreen;
+
   Player player = Player(character: 'Mask Dude');
+  late CameraComponent cam;
   late JoystickComponent joystick;
   bool showControls = true;
   bool playSounds = true;
@@ -36,19 +41,42 @@ class PixelAdventure extends FlameGame
 
   @override
   FutureOr<void> onLoad() async {
+    WidgetsBinding.instance.addObserver(this);
+
     // Load all images into cache
     await images.loadAllImages();
     // await FlameAudio.audioCache.load('bgm.mp3');
     FlameAudio.bgm.initialize;
     FlameAudio.audioCache.loadAll;
 
-    _loadLevel();
+    startScreen = StartScreen(onStart: _loadLevel);
+    add(startScreen);
 
-    if (showControls) {
-      addJoyStick();
-    }
+    // _loadLevel();
+
+    // if (showControls) {
+    //   addJoyStick();
+    // }
 
     return super.onLoad();
+  }
+
+  @override
+  void onRemove() {
+    FlameAudio.bgm.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    super.onRemove();
+  }
+
+  // when app on background stop music or resume it when app on screen
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      FlameAudio.bgm.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      FlameAudio.bgm.resume();
+    }
+    super.didChangeAppLifecycleState(state);
   }
 
   @override
@@ -61,7 +89,6 @@ class PixelAdventure extends FlameGame
 
   void addJoyStick() {
     joystick = JoystickComponent(
-      priority: 2,
       knob: SpriteComponent(
         sprite: Sprite(
           images.fromCache('HUD/Knob.png'),
@@ -75,8 +102,8 @@ class PixelAdventure extends FlameGame
       margin: const EdgeInsets.only(left: 32, bottom: 32),
     );
 
-    camera.viewport.addAll([joystick, JumpButton()]);
-    // addAll([joystick, JumpButton()]);
+    // cam.viewport.addAll([joystick, JumpButton()]);
+    addAll([joystick, JumpButton()]);
   }
 
   void updateJoyStick() {
@@ -128,5 +155,10 @@ class PixelAdventure extends FlameGame
         addAll([cam, world]);
       },
     );
+  }
+
+  void showLevelSelection() {
+    remove(startScreen);
+    // create level selection screen and add it into the game
   }
 }

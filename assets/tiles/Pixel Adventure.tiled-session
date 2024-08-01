@@ -3,45 +3,45 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Level-01.tmx",
+    "activeFile": "Level-05.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
         "Level-01.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 301.66666666666663,
-                "y": 184
+                "x": 330,
+                "y": 184.33333333333334
             }
         },
         "Level-02.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 319.5,
-                "y": 183
+                "x": 320,
+                "y": 183.5
             }
         },
         "Level-03.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 298.3333333333333,
-                "y": 166
+                "x": 320,
+                "y": 184.33333333333334
             }
         },
         "Level-04.tmx": {
@@ -52,17 +52,17 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 313.5,
-                "y": 197
+                "x": 320,
+                "y": 183.5
             }
         },
         "Level-05.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 1.141484375,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
                 "x": 320.19711176510845,
                 "y": 183.9709807679146
@@ -95,16 +95,18 @@
         "Level-01.tmx",
         "Level-02.tmx",
         "Level-03.tmx",
-        "Level-04.tmx"
+        "Level-04.tmx",
+        "Level-05.tmx"
     ],
     "project": "Pixel Adventure.tiled-project",
     "property.type": "float",
     "recentFiles": [
         "Pixel Adventure.tsx",
-        "Level-04.tmx",
-        "Level-03.tmx",
-        "Level-02.tmx",
         "Level-01.tmx",
+        "Level-02.tmx",
+        "Level-03.tmx",
+        "Level-04.tmx",
+        "Level-05.tmx",
         "untitled.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
