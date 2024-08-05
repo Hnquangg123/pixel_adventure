@@ -10,6 +10,8 @@ import 'package:flutter/painting.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/level.dart';
+import 'package:pixel_adventure/screens/choose_level_screen.dart';
+import 'package:pixel_adventure/screens/load_screen.dart';
 import 'package:pixel_adventure/screens/start_screen.dart';
 
 class PixelAdventure extends FlameGame
@@ -23,6 +25,9 @@ class PixelAdventure extends FlameGame
   Color backgroundColor() => const Color(0xFF211f30);
 
   late StartScreen startScreen;
+  late LoadScreen loadScreen;
+  late ChooseLevelScreen levelScreen;
+  bool firstStart = true;
 
   Player player = Player(character: 'Mask Dude');
   late CameraComponent cam;
@@ -49,14 +54,22 @@ class PixelAdventure extends FlameGame
     FlameAudio.bgm.initialize;
     FlameAudio.audioCache.loadAll;
 
-    startScreen = StartScreen(onStart: _loadLevel);
+    // startScreen = StartScreen(onStart: _loadLevel);
+    startScreen = StartScreen(onStart: _loadLevelScreen);
+
+    loadScreen = LoadScreen();
+
     add(startScreen);
+
+    if (playSounds) {
+      FlameAudio.bgm.play('1-01. Title Screen.mp3', volume: 0.25);
+    }
 
     // _loadLevel();
 
-    // if (showControls) {
-    //   addJoyStick();
-    // }
+    if (showControls) {
+      addJoyStick();
+    }
 
     return super.onLoad();
   }
@@ -139,6 +152,13 @@ class PixelAdventure extends FlameGame
   }
 
   void _loadLevel() {
+    if (firstStart) {
+      remove(startScreen);
+      firstStart = false;
+      FlameAudio.bgm.stop();
+    }
+    add(loadScreen);
+
     Future.delayed(
       const Duration(seconds: 1),
       () {
@@ -157,8 +177,42 @@ class PixelAdventure extends FlameGame
     );
   }
 
+  void loadLevelFromChoosing(String level, int levelIndex) {
+
+    add(loadScreen);
+
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        Level world = Level(
+          levelName: 'Level-$level',
+          player: player,
+        );
+
+        currentLevelIndex = levelIndex;
+
+        cam = CameraComponent.withFixedResolution(
+            width: 640, height: 360, world: world);
+
+        cam.viewfinder.anchor = Anchor.topLeft;
+
+        addAll([cam, world]);
+      },
+    );
+  }
+
   void showLevelSelection() {
     remove(startScreen);
     // create level selection screen and add it into the game
+  }
+
+  void _loadLevelScreen() {
+    if (firstStart) {
+      remove(startScreen);
+      levelScreen = ChooseLevelScreen(player: player);
+      add(levelScreen);
+      firstStart = false;
+      FlameAudio.bgm.stop();
+    }
   }
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="51">
+ <tileset firstgid="1" source="Pixel Adventure.tsx"/>
+ <layer id="1" name="Background" width="40" height="23">
+  <properties>
+   <property name="BackgroundColor" value="Yellow"/>
+  </properties>
+  <data encoding="csv">
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,4,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,5,24,24,24,
+24,24,24,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,24,24,24,
+24,24,24,25,0,7,9,0,7,9,0,7,9,0,7,9,0,7,9,0,0,7,9,0,7,9,0,7,9,0,7,9,0,7,9,0,23,24,24,24,
+24,24,24,25,0,51,53,0,51,53,0,51,53,0,51,53,0,51,53,0,0,51,53,0,51,53,0,51,53,0,51,53,0,51,53,0,23,24,24,24,
+24,24,24,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,24,24,24,
+24,24,24,25,0,95,97,0,95,97,0,95,97,0,95,97,0,95,97,0,0,95,97,0,95,97,0,95,97,0,95,97,0,95,97,0,23,24,24,24,
+24,24,24,25,0,139,141,0,139,141,0,139,141,0,139,141,0,139,141,0,0,139,141,0,139,141,0,139,141,0,139,141,0,139,141,0,23,24,24,24,
+24,24,24,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,24,24,24,
+24,24,24,25,0,183,185,0,183,185,0,183,185,0,183,185,0,183,185,0,0,183,185,0,183,185,0,183,185,0,183,185,0,183,185,0,23,24,24,24,
+24,24,24,25,0,227,229,0,227,229,0,227,229,0,227,229,0,227,229,0,0,227,229,0,227,229,0,227,229,0,227,229,0,227,229,0,23,24,24,24,
+24,24,24,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,24,24,24,
+24,24,24,25,0,106,108,0,106,108,0,106,108,0,106,108,0,106,108,0,0,106,108,0,106,108,0,106,108,0,106,108,0,106,108,0,23,24,24,24,
+24,24,24,25,0,150,152,0,150,152,0,150,152,0,150,152,0,150,152,0,0,150,152,0,150,152,0,150,152,0,150,152,0,150,152,0,23,24,24,24,
+24,24,24,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,24,24,24,
+24,24,24,25,0,177,179,0,177,179,0,177,179,0,177,179,0,177,179,0,0,177,179,0,177,179,0,177,179,0,177,179,0,177,179,0,23,24,24,24,
+24,24,24,25,0,221,223,0,221,223,0,221,223,0,221,223,0,221,223,0,0,221,223,0,221,223,0,221,223,0,221,223,0,221,223,0,23,24,24,24,
+24,24,24,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,24,24,24,
+24,24,24,26,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,27,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24
+</data>
+ </layer>
+ <objectgroup id="2" name="LevelGroup">
+  <object id="1" name="01" type="Level" x="80" y="64" width="32" height="32"/>
+  <object id="2" name="02" type="Level" x="128" y="64" width="32" height="32"/>
+  <object id="3" name="03" type="Level" x="176" y="64" width="32" height="32"/>
+  <object id="4" name="04" type="Level" x="224" y="64" width="32" height="32"/>
+  <object id="5" name="05" type="Level" x="272" y="64" width="32" height="32"/>
+  <object id="6" name="06" type="Level" x="336" y="64" width="32" height="32"/>
+  <object id="7" name="07" type="Level" x="384" y="64" width="32" height="32"/>
+  <object id="8" name="08" type="Level" x="432" y="64" width="32" height="32"/>
+  <object id="9" name="09" type="Level" x="480" y="64" width="32" height="32"/>
+  <object id="10" name="10" type="Level" x="528" y="64" width="32" height="32"/>
+  <object id="11" name="11" type="Level" x="80" y="112" width="32" height="32"/>
+  <object id="12" name="12" type="Level" x="128" y="112" width="32" height="32"/>
+  <object id="13" name="13" type="Level" x="176" y="112" width="32" height="32"/>
+  <object id="14" name="14" type="Level" x="224" y="112" width="32" height="32"/>
+  <object id="15" name="15" type="Level" x="272" y="112" width="32" height="32"/>
+  <object id="16" name="16" type="Level" x="336" y="112" width="32" height="32"/>
+  <object id="17" name="17" type="Level" x="384" y="112" width="32" height="32"/>
+  <object id="18" name="18" type="Level" x="432" y="112" width="32" height="32"/>
+  <object id="19" name="19" type="Level" x="480" y="112" width="32" height="32"/>
+  <object id="20" name="20" type="Level" x="528" y="112" width="32" height="32"/>
+  <object id="21" name="21" type="Level" x="80" y="160" width="32" height="32"/>
+  <object id="22" name="22" type="Level" x="128" y="160" width="32" height="32"/>
+  <object id="23" name="23" type="Level" x="176" y="160" width="32" height="32"/>
+  <object id="24" name="24" type="Level" x="224" y="160" width="32" height="32"/>
+  <object id="25" name="25" type="Level" x="272" y="160" width="32" height="32"/>
+  <object id="26" name="26" type="Level" x="336" y="160" width="32" height="32"/>
+  <object id="27" name="27" type="Level" x="384" y="160" width="32" height="32"/>
+  <object id="28" name="28" type="Level" x="432" y="160" width="32" height="32"/>
+  <object id="29" name="29" type="Level" x="480" y="160" width="32" height="32"/>
+  <object id="30" name="30" type="Level" x="528" y="160" width="32" height="32"/>
+  <object id="31" name="31" type="Level" x="80" y="208" width="32" height="32"/>
+  <object id="32" name="32" type="Level" x="128" y="208" width="32" height="32"/>
+  <object id="33" name="33" type="Level" x="176" y="208" width="32" height="32"/>
+  <object id="34" name="34" type="Level" x="224" y="208" width="32" height="32"/>
+  <object id="35" name="35" type="Level" x="272" y="208" width="32" height="32"/>
+  <object id="36" name="36" type="Level" x="336" y="208" width="32" height="32"/>
+  <object id="37" name="37" type="Level" x="384" y="208" width="32" height="32"/>
+  <object id="38" name="38" type="Level" x="432" y="208" width="32" height="32"/>
+  <object id="39" name="39" type="Level" x="480" y="208" width="32" height="32"/>
+  <object id="40" name="40" type="Level" x="528" y="208" width="32" height="32"/>
+  <object id="41" name="41" type="Level" x="80" y="256" width="32" height="32"/>
+  <object id="42" name="42" type="Level" x="128" y="256" width="32" height="32"/>
+  <object id="43" name="43" type="Level" x="176" y="256" width="32" height="32"/>
+  <object id="44" name="44" type="Level" x="224" y="256" width="32" height="32"/>
+  <object id="45" name="45" type="Level" x="272" y="256" width="32" height="32"/>
+  <object id="46" name="46" type="Level" x="336" y="256" width="32" height="32"/>
+  <object id="47" name="47" type="Level" x="384" y="256" width="32" height="32"/>
+  <object id="48" name="48" type="Level" x="432" y="256" width="32" height="32"/>
+  <object id="49" name="49" type="Level" x="480" y="256" width="32" height="32"/>
+  <object id="50" name="50" type="Level" x="528" y="256" width="32" height="32"/>
+ </objectgroup>
+</map>
