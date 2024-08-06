@@ -7,17 +7,15 @@ import 'package:flame/text.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 class LevelButton extends TextComponent
-    with TapCallbacks, HasGameRef<PixelAdventure> {
+    with HasGameRef<PixelAdventure> {
   late SpriteFontRenderer fontRenderer;
 
-  final VoidCallback onPressed;
 
   LevelButton({
     super.position,
     super.size,
     super.text,
     super.textRenderer,
-    required this.onPressed,
   });
 
   @override
@@ -45,7 +43,7 @@ class LevelButton extends TextComponent
         glyphs: glyphs,
         defaultCharWidth: 8,
       ),
-      scale: 3.5,
+      scale: 2,
       letterSpacing: 0,
     );
 
@@ -54,9 +52,4 @@ class LevelButton extends TextComponent
     return super.onLoad();
   }
 
-  @override
-  void onTapDown(TapDownEvent event) {
-    onPressed();
-    super.onTapDown(event);
-  }
 }

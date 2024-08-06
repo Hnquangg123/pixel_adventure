@@ -54,8 +54,10 @@ class PixelAdventure extends FlameGame
     FlameAudio.bgm.initialize;
     FlameAudio.audioCache.loadAll;
 
-    // startScreen = StartScreen(onStart: _loadLevel);
-    startScreen = StartScreen(onStart: _loadLevelScreen);
+    startScreen = StartScreen(
+      onStart: () => _loadLevel(true),
+    );
+    // startScreen = StartScreen(onStart: _loadLevelScreen);
 
     loadScreen = LoadScreen();
 
@@ -64,8 +66,6 @@ class PixelAdventure extends FlameGame
     if (playSounds) {
       FlameAudio.bgm.play('1-01. Title Screen.mp3', volume: 0.25);
     }
-
-    // _loadLevel();
 
     if (showControls) {
       addJoyStick();
@@ -144,20 +144,23 @@ class PixelAdventure extends FlameGame
 
     if (currentLevelIndex < levelNames.length - 1) {
       currentLevelIndex++;
-      _loadLevel();
+      _loadLevel(false);
     } else {
       currentLevelIndex = 0;
-      _loadLevel();
+      _loadLevel(false);
     }
   }
 
-  void _loadLevel() {
+  void _loadLevel(bool isChooseLevel) {
     if (firstStart) {
       remove(startScreen);
       firstStart = false;
       FlameAudio.bgm.stop();
     }
-    add(loadScreen);
+
+    if (!isChooseLevel) {
+      add(loadScreen);
+    }
 
     Future.delayed(
       const Duration(seconds: 1),
@@ -165,6 +168,7 @@ class PixelAdventure extends FlameGame
         Level world = Level(
           levelName: levelNames[currentLevelIndex],
           player: player,
+          isChooseLevel: isChooseLevel,
         );
 
         cam = CameraComponent.withFixedResolution(
@@ -178,7 +182,6 @@ class PixelAdventure extends FlameGame
   }
 
   void loadLevelFromChoosing(String level, int levelIndex) {
-
     add(loadScreen);
 
     Future.delayed(
@@ -187,6 +190,7 @@ class PixelAdventure extends FlameGame
         Level world = Level(
           levelName: 'Level-$level',
           player: player,
+          isChooseLevel: false,
         );
 
         currentLevelIndex = levelIndex;
@@ -206,13 +210,13 @@ class PixelAdventure extends FlameGame
     // create level selection screen and add it into the game
   }
 
-  void _loadLevelScreen() {
-    if (firstStart) {
-      remove(startScreen);
-      levelScreen = ChooseLevelScreen(player: player);
-      add(levelScreen);
-      firstStart = false;
-      FlameAudio.bgm.stop();
-    }
-  }
+  // void _loadLevelScreen() {
+  //   if (firstStart) {
+  //     remove(startScreen);
+  //     levelScreen = ChooseLevelScreen();
+  //     add(levelScreen);
+  //     firstStart = false;
+  //     FlameAudio.bgm.stop();
+  //   }
+  // }
 }

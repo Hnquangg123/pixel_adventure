@@ -11,27 +11,39 @@ import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:pixel_adventure/screens/choose_level_screen.dart';
 
 class Level extends World with HasGameRef<PixelAdventure> {
   final String levelName;
   final Player player;
-  Level({required this.levelName, required this.player});
+  final bool isChooseLevel;
+  Level(
+      {required this.levelName,
+      required this.player,
+      required this.isChooseLevel});
   late TiledComponent level;
+  late ChooseLevelScreen levelScreen;
   List<CollisionBlock> collisionBlock = [];
 
   @override
   FutureOr<void> onLoad() async {
-    level = await TiledComponent.load("$levelName.tmx", Vector2.all(16));
-    
-    if (game.playSounds) {
-      FlameAudio.bgm.play('1-06. Dungeon (Spelunker Theme).mp3', volume: 0.25);
+    if (isChooseLevel) {
+      levelScreen = ChooseLevelScreen();
+      add(levelScreen);
+    } else {
+      level = await TiledComponent.load("$levelName.tmx", Vector2.all(16));
+
+      if (game.playSounds) {
+        FlameAudio.bgm
+            .play('1-06. Dungeon (Spelunker Theme).mp3', volume: 0.25);
+      }
+
+      add(level);
+
+      _scrollingBackground();
+      _spawningObject();
+      _addCollision();
     }
-
-    add(level);
-
-    _scrollingBackground();
-    _spawningObject();
-    _addCollision();
 
     return super.onLoad();
   }
