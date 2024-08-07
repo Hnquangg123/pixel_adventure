@@ -33,6 +33,7 @@ class LevelButton extends TextComponent
       Glyph('7', left: 56, top: 30),
       Glyph('8', left: 64, top: 30),
       Glyph('9', left: 72, top: 30),
+      Glyph('?', left: 24, top: 40),
     ];
 
     fontRenderer = SpriteFontRenderer.fromFont(

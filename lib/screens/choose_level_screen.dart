@@ -37,13 +37,16 @@ class ChooseLevelScreen extends PositionComponent
     final groupLevel = levelBoard.tileMap.getLayer<ObjectGroup>('LevelGroup');
 
     if (groupLevel != null) {
+
+      game.levelLength = groupLevel.objects.length;
+
       for (final spawnPoint in groupLevel!.objects) {
         switch (spawnPoint.class_) {
           case 'Level':
             // add text component render with spritefont
             levelButton = LevelButton(
               // size: Vector2(spawnPoint.width, spawnPoint.height),
-              position: Vector2(0, 6), // Font scale x2 so 20, block size 32 so middle = 6
+              position: spawnPoint.name == '?' ? Vector2(8,6) : Vector2(0, 6), // Font scale x2 so 20, block size 32 so middle = 6
               text: spawnPoint.name,
             );
 
@@ -51,7 +54,7 @@ class ChooseLevelScreen extends PositionComponent
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
               button: levelButton,
-              onPressed: () => _loadLevel(spawnPoint.name, spawnPoint.id),
+              onPressed: () => spawnPoint.name != '?' ? _loadLevel(spawnPoint.name, spawnPoint.id) : null,
             );
 
             add(button);

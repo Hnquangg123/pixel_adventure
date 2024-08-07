@@ -32,8 +32,8 @@ class PixelAdventure extends FlameGame
   Player player = Player(character: 'Mask Dude');
   late CameraComponent cam;
   late JoystickComponent joystick;
-  bool showControls = true;
-  bool playSounds = true;
+  bool showControls = false;
+  bool playSounds = false;
   double soundVolume = 1.0;
   List<String> levelNames = [
     'Level-01',
@@ -42,6 +42,7 @@ class PixelAdventure extends FlameGame
     'Level-04',
     'Level-05',
   ];
+  int levelLength = 0;
   int currentLevelIndex = 0;
 
   @override
@@ -142,11 +143,12 @@ class PixelAdventure extends FlameGame
       (component) => component is Level,
     );
 
-    if (currentLevelIndex < levelNames.length - 1) {
+    // if (currentLevelIndex < levelLength) {
+    if (currentLevelIndex < levelNames.length) {
       currentLevelIndex++;
       _loadLevel(false);
     } else {
-      currentLevelIndex = 0;
+      currentLevelIndex = 1;
       _loadLevel(false);
     }
   }
@@ -166,7 +168,7 @@ class PixelAdventure extends FlameGame
       const Duration(seconds: 1),
       () {
         Level world = Level(
-          levelName: levelNames[currentLevelIndex],
+          levelName: currentLevelIndex < 10 ? 'Level-0$currentLevelIndex' : 'Level-$currentLevelIndex',
           player: player,
           isChooseLevel: isChooseLevel,
         );
