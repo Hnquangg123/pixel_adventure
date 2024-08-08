@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/components/HUD/previous_button.dart';
+import 'package:pixel_adventure/components/HUD/next_button.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/chicken.dart';
 import 'package:pixel_adventure/components/saw.dart';
@@ -10,6 +12,7 @@ import 'package:pixel_adventure/components/background_tile.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/player.dart';
+import 'package:pixel_adventure/components/HUD/volume_button.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 import 'package:pixel_adventure/screens/choose_level_screen.dart';
 
@@ -38,8 +41,13 @@ class Level extends World with HasGameRef<PixelAdventure> {
             .play('1-06. Dungeon (Spelunker Theme).mp3', volume: 0.25);
       }
 
+      if (!game.playSounds) {
+        FlameAudio.bgm.stop();
+      }
+
       add(level);
 
+      _addHud();
       _scrollingBackground();
       _spawningObject();
       _addCollision();
@@ -153,5 +161,16 @@ class Level extends World with HasGameRef<PixelAdventure> {
     }
 
     player.collisionBlock = collisionBlock;
+  }
+
+  void _addHud() {
+    final volumeButton = VolumeButton(
+        position: Vector2(600,16));
+    final nextButton = NextButton(position: Vector2(580,16));
+    final previousButton = PreviousButton(position: Vector2(560,16));
+
+    add(volumeButton);
+    add(nextButton);
+    add(previousButton);
   }
 }

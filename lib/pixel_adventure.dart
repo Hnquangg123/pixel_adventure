@@ -153,6 +153,21 @@ class PixelAdventure extends FlameGame
     }
   }
 
+  void loadPreviousLevel() {
+    removeWhere(
+      (component) => component is Level,
+    );
+
+    // if (currentLevelIndex < levelLength) {
+    if (currentLevelIndex > 1) {
+      currentLevelIndex--;
+      _loadLevel(false);
+    } else {
+      currentLevelIndex = 1;
+      _loadLevel(false);
+    }
+  }
+
   void _loadLevel(bool isChooseLevel) {
     if (firstStart) {
       remove(startScreen);
