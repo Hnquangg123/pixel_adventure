@@ -58,6 +58,9 @@ class Fruit extends SpriteAnimationComponent
       if (game.playSounds) {
         FlameAudio.play('collect_fruit2.wav', volume: game.soundVolume);
       }
+      
+      game.gamePoint++;
+
       animation = SpriteAnimation.fromFrameData(
         game.images.fromCache('Items/Fruits/Collected.png'),
         SpriteAnimationData.sequenced(

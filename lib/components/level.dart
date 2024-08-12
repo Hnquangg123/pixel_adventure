@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/components/HUD/life_bar.dart';
 import 'package:pixel_adventure/components/HUD/previous_button.dart';
 import 'package:pixel_adventure/components/HUD/next_button.dart';
+import 'package:pixel_adventure/components/HUD/score_bar.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/chicken.dart';
 import 'package:pixel_adventure/components/saw.dart';
@@ -168,9 +170,13 @@ class Level extends World with HasGameRef<PixelAdventure> {
         position: Vector2(600,16));
     final nextButton = NextButton(position: Vector2(580,16));
     final previousButton = PreviousButton(position: Vector2(560,16));
+    final lifeBar = LifeBar(position: Vector2(300, 8), size: Vector2.all(24));
+    final scoreBar = ScoreBar(position: Vector2(20, 8));
 
     add(volumeButton);
     add(nextButton);
     add(previousButton);
+    add(lifeBar);
+    add(scoreBar);
   }
 }

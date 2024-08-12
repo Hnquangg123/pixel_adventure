@@ -5,6 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
@@ -45,6 +46,8 @@ class PixelAdventure extends FlameGame
   int levelLength = 0;
   int currentLevelIndex = 0;
 
+  int gamePoint = 0;
+
   @override
   FutureOr<void> onLoad() async {
     WidgetsBinding.instance.addObserver(this);
@@ -54,6 +57,9 @@ class PixelAdventure extends FlameGame
     // await FlameAudio.audioCache.load('bgm.mp3');
     FlameAudio.bgm.initialize;
     FlameAudio.audioCache.loadAll;
+
+    // add Bloc to manage score
+    FlameBlocProvider<scoreBloc, scoreBlocState>(create: , children: ,);
 
     startScreen = StartScreen(
       onStart: () => _loadLevel(true),
@@ -88,9 +94,11 @@ class PixelAdventure extends FlameGame
     if (state == AppLifecycleState.paused) {
       FlameAudio.bgm.pause();
     } else if (state == AppLifecycleState.resumed) {
-      FlameAudio.bgm.resume();
+      if (playSounds) {
+        FlameAudio.bgm.resume();
+      }
     }
-    super.didChangeAppLifecycleState(state);
+    super.didChangeAppLifecycleState(state);  
   }
 
   @override
@@ -183,7 +191,9 @@ class PixelAdventure extends FlameGame
       const Duration(seconds: 1),
       () {
         Level world = Level(
-          levelName: currentLevelIndex < 10 ? 'Level-0$currentLevelIndex' : 'Level-$currentLevelIndex',
+          levelName: currentLevelIndex < 10
+              ? 'Level-0$currentLevelIndex'
+              : 'Level-$currentLevelIndex',
           player: player,
           isChooseLevel: isChooseLevel,
         );
