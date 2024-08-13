@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/components/HUD/life_bar.dart';
 import 'package:pixel_adventure/components/HUD/previous_button.dart';
 import 'package:pixel_adventure/components/HUD/next_button.dart';
@@ -22,10 +24,13 @@ class Level extends World with HasGameRef<PixelAdventure> {
   final String levelName;
   final Player player;
   final bool isChooseLevel;
-  Level(
-      {required this.levelName,
-      required this.player,
-      required this.isChooseLevel});
+  final ScoreBloc scoreBloc;
+  Level({
+    required this.levelName,
+    required this.player,
+    required this.isChooseLevel,
+    required this.scoreBloc,
+  });
   late TiledComponent level;
   late ChooseLevelScreen levelScreen;
   List<CollisionBlock> collisionBlock = [];
@@ -165,11 +170,10 @@ class Level extends World with HasGameRef<PixelAdventure> {
     player.collisionBlock = collisionBlock;
   }
 
-  void _addHud() {
-    final volumeButton = VolumeButton(
-        position: Vector2(600,16));
-    final nextButton = NextButton(position: Vector2(580,16));
-    final previousButton = PreviousButton(position: Vector2(560,16));
+  void _addHud() async {
+    final volumeButton = VolumeButton(position: Vector2(600, 16));
+    final nextButton = NextButton(position: Vector2(580, 16));
+    final previousButton = PreviousButton(position: Vector2(560, 16));
     final lifeBar = LifeBar(position: Vector2(300, 8), size: Vector2.all(24));
     final scoreBar = ScoreBar(position: Vector2(20, 8));
 
@@ -177,6 +181,13 @@ class Level extends World with HasGameRef<PixelAdventure> {
     add(nextButton);
     add(previousButton);
     add(lifeBar);
-    add(scoreBar);
+    await add(
+      FlameBlocProvider<ScoreBloc, ScoreState>.value(
+        value: scoreBloc,
+        children: [
+          scoreBar,
+        ],
+      ),
+    );
   }
 }

@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame/text.dart';
+import 'package:flame_bloc/flame_bloc.dart';
+import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-class ScoreBar extends PositionComponent with HasGameRef<PixelAdventure> {
+class ScoreBar extends PositionComponent with HasGameRef<PixelAdventure>, FlameBlocListenable<ScoreBloc, ScoreState> {
   late SpriteFontRenderer fontRenderer;
 
   int gamePoint = 0;
@@ -60,11 +62,16 @@ class ScoreBar extends PositionComponent with HasGameRef<PixelAdventure> {
     return super.onLoad();
   }
 
-  void updateState() {
-    gamePoint = game.gamePoint;
-    // scoreComponent = TextComponent(
-    //   text: 'SCORE: $gamePoint',
-    //   textRenderer: fontRenderer,
-    // );
+  @override
+  void onNewState(ScoreState state) {
+    gamePoint = state.score;
+    game.gamePoint = state.score;
+    remove(scoreComponent);
+    scoreComponent = TextComponent(
+      text: 'SCORE: $gamePoint',
+      textRenderer: fontRenderer,
+    );
+    add(scoreComponent);
+    super.onNewState(state);
   }
 }

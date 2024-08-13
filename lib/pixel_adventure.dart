@@ -8,6 +8,8 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:pixel_adventure/blocs/score/score_bloc.dart';
+import 'package:pixel_adventure/components/HUD/score_bar.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/level.dart';
@@ -22,13 +24,17 @@ class PixelAdventure extends FlameGame
         HasCollisionDetection,
         TapCallbacks,
         WidgetsBindingObserver {
+
   @override
   Color backgroundColor() => const Color(0xFF211f30);
 
   late StartScreen startScreen;
   late LoadScreen loadScreen;
   late ChooseLevelScreen levelScreen;
+  late ScoreBar scoreBar;
   bool firstStart = true;
+
+  late ScoreBloc scoreBloc;
 
   Player player = Player(character: 'Mask Dude');
   late CameraComponent cam;
@@ -58,8 +64,17 @@ class PixelAdventure extends FlameGame
     FlameAudio.bgm.initialize;
     FlameAudio.audioCache.loadAll;
 
+    // Init ScoreBar & Bloc
+    scoreBloc = ScoreBloc();
+    scoreBar = ScoreBar(position: Vector2(99, 99));
+
     // add Bloc to manage score
-    FlameBlocProvider<scoreBloc, scoreBlocState>(create: , children: ,);
+    // await add(FlameBlocProvider<ScoreBloc, ScoreState>.value(
+    //   value: scoreBloc,
+    //   children: [
+    //     scoreBar,
+    //   ],
+    // ));
 
     startScreen = StartScreen(
       onStart: () => _loadLevel(true),
@@ -98,7 +113,7 @@ class PixelAdventure extends FlameGame
         FlameAudio.bgm.resume();
       }
     }
-    super.didChangeAppLifecycleState(state);  
+    super.didChangeAppLifecycleState(state);
   }
 
   @override
@@ -196,6 +211,7 @@ class PixelAdventure extends FlameGame
               : 'Level-$currentLevelIndex',
           player: player,
           isChooseLevel: isChooseLevel,
+          scoreBloc: scoreBloc,
         );
 
         cam = CameraComponent.withFixedResolution(
@@ -218,6 +234,7 @@ class PixelAdventure extends FlameGame
           levelName: 'Level-$level',
           player: player,
           isChooseLevel: false,
+          scoreBloc: scoreBloc,
         );
 
         currentLevelIndex = levelIndex;
@@ -235,6 +252,10 @@ class PixelAdventure extends FlameGame
   void showLevelSelection() {
     remove(startScreen);
     // create level selection screen and add it into the game
+  }
+
+  void increaseScore(int scoreIncreasing) {
+    scoreBloc.add(ScoreEventAdded(scoreIncreasing));
   }
 
   // void _loadLevelScreen() {
