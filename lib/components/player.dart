@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
+import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/chicken.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
@@ -24,7 +26,11 @@ enum PlayerState {
 }
 
 class Player extends SpriteAnimationGroupComponent
-    with HasGameRef<PixelAdventure>, KeyboardHandler, CollisionCallbacks {
+    with
+        HasGameRef<PixelAdventure>,
+        KeyboardHandler,
+        CollisionCallbacks,
+        FlameBlocListenable<ScoreBloc, ScoreState> {
   String character;
   Player({position, this.character = 'Ninja Frog'}) : super(position: position);
 
@@ -57,6 +63,7 @@ class Player extends SpriteAnimationGroupComponent
   bool isOnGround = false;
   bool hasJumped = false;
   bool gotHit = false;
+  bool gotHitOneChecked = true;
   bool reachedCheckPoint = false;
 
   @override
@@ -278,19 +285,33 @@ class Player extends SpriteAnimationGroupComponent
     await animationTicker?.completed;
     animationTicker?.reset();
 
-    scale.x = 1;
-    position = startingPosition - Vector2.all(32);
-    current = PlayerState.appearing;
+    // here we handle life point START
 
-    await animationTicker?.completed;
-    animationTicker?.reset();
+    if (game.lifePoint > 0 && gotHit && gotHitOneChecked) {
+      gotHitOneChecked = false;
+      scale.x = 1;
+      position = startingPosition - Vector2.all(32);
+      current = PlayerState.appearing;
 
-    velocity = Vector2.zero();
-    position = startingPosition;
-    _updatePlayerState();
-    Future.delayed(canMoveDuration, () {
+      await animationTicker?.completed;
+      animationTicker?.reset();
+
+      velocity = Vector2.zero();
+      position = startingPosition;
+      _updatePlayerState();
+      Future.delayed(canMoveDuration, () {
+        gotHit = false;
+        gotHitOneChecked = true;
+      });
+      game.decreaseLife();
+    }
+
+    if (game.lifePoint == 0 && gotHit) {
       gotHit = false;
-    });
+      game.gameOver();
+    }
+
+    // here we handle life point END
   }
 
   Future<void> _reachedCheckPoint() async {
@@ -323,4 +344,12 @@ class Player extends SpriteAnimationGroupComponent
     _respawn();
   }
 
+  @override
+  void onNewState(ScoreState state) {
+    game.lifePoint = state.live;
+    game.gamePoint = state.score;
+    print(game.lifePoint);
+    print(state.live);
+    super.onNewState(state);
+  }
 }

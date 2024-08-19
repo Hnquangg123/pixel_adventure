@@ -5,7 +5,6 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:pixel_adventure/blocs/score/score_bloc.dart';
@@ -14,6 +13,7 @@ import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/level.dart';
 import 'package:pixel_adventure/screens/choose_level_screen.dart';
+import 'package:pixel_adventure/screens/game_over_screen.dart';
 import 'package:pixel_adventure/screens/load_screen.dart';
 import 'package:pixel_adventure/screens/start_screen.dart';
 
@@ -24,19 +24,19 @@ class PixelAdventure extends FlameGame
         HasCollisionDetection,
         TapCallbacks,
         WidgetsBindingObserver {
-
   @override
   Color backgroundColor() => const Color(0xFF211f30);
 
   late StartScreen startScreen;
   late LoadScreen loadScreen;
   late ChooseLevelScreen levelScreen;
+  late GameOverScreen gameOverScreen;
   late ScoreBar scoreBar;
   bool firstStart = true;
 
   late ScoreBloc scoreBloc;
 
-  Player player = Player(character: 'Mask Dude');
+  late Player player;
   late CameraComponent cam;
   late JoystickComponent joystick;
   bool showControls = false;
@@ -53,6 +53,7 @@ class PixelAdventure extends FlameGame
   int currentLevelIndex = 0;
 
   int gamePoint = 0;
+  int lifePoint = 2;
 
   @override
   FutureOr<void> onLoad() async {
@@ -64,9 +65,12 @@ class PixelAdventure extends FlameGame
     FlameAudio.bgm.initialize;
     FlameAudio.audioCache.loadAll;
 
+    // Init Player
+    player = Player(character: 'Mask Dude');
+
     // Init ScoreBar & Bloc
     scoreBloc = ScoreBloc();
-    scoreBar = ScoreBar(position: Vector2(99, 99));
+    // scoreBar = ScoreBar(position: Vector2(99, 99));
 
     // add Bloc to manage score
     // await add(FlameBlocProvider<ScoreBloc, ScoreState>.value(
@@ -161,6 +165,24 @@ class PixelAdventure extends FlameGame
     }
   }
 
+  Future<void> gameOver() async {
+    removeWhere(
+      (component) => component is Level,
+    );
+
+    gameOverScreen = GameOverScreen(
+      onStart: () async {
+        await loadNewStart();
+      },
+    );
+    scoreBloc.add(const GameReset());
+    await add(gameOverScreen);
+  }
+
+  // void _clickGameOver() {
+  //   remove(gameOverScreen);
+// }
+
   void loadNextLevel() {
     removeWhere(
       (component) => component is Level,
@@ -198,9 +220,9 @@ class PixelAdventure extends FlameGame
       FlameAudio.bgm.stop();
     }
 
-    if (!isChooseLevel) {
-      add(loadScreen);
-    }
+    // if (!isChooseLevel) {
+    // }
+    add(loadScreen);
 
     Future.delayed(
       const Duration(seconds: 1),
@@ -218,7 +240,9 @@ class PixelAdventure extends FlameGame
             width: 640, height: 360, world: world);
 
         cam.viewfinder.anchor = Anchor.topLeft;
-
+        // if (!isChooseLevel) {
+        // }
+        remove(loadScreen);
         addAll([cam, world]);
       },
     );
@@ -243,7 +267,7 @@ class PixelAdventure extends FlameGame
             width: 640, height: 360, world: world);
 
         cam.viewfinder.anchor = Anchor.topLeft;
-
+        remove(loadScreen);
         addAll([cam, world]);
       },
     );
@@ -256,6 +280,44 @@ class PixelAdventure extends FlameGame
 
   void increaseScore(int scoreIncreasing) {
     scoreBloc.add(ScoreEventAdded(scoreIncreasing));
+  }
+
+  void decreaseLife() {
+    scoreBloc.add(const PlayerDie());
+  }
+
+  FutureOr<void> loadNewStart() async {
+    
+    remove(gameOverScreen);
+    firstStart = true;
+
+    // Init Player
+    player = Player(character: 'Mask Dude');
+
+    // Init ScoreBar & Bloc
+    scoreBloc = ScoreBloc();
+    // scoreBar = ScoreBar(position: Vector2(99, 99));
+
+    // add Bloc to manage score
+    // await add(FlameBlocProvider<ScoreBloc, ScoreState>.value(
+    //   value: scoreBloc,
+    //   children: [
+    //     scoreBar,
+    //   ],
+    // ));
+
+    startScreen = StartScreen(
+      onStart: () => _loadLevel(true),
+    );
+    // startScreen = StartScreen(onStart: _loadLevelScreen);
+
+    loadScreen = LoadScreen();
+
+    add(startScreen);
+
+    if (playSounds) {
+      FlameAudio.bgm.play('1-01. Title Screen.mp3', volume: 0.25);
+    }
   }
 
   // void _loadLevelScreen() {

@@ -79,7 +79,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
     }
   }
 
-  void _spawningObject() {
+  void _spawningObject() async {
     final spawmPointsLayer = level.tileMap.getLayer<ObjectGroup>('Spawnpoints');
 
     if (spawmPointsLayer != null) {
@@ -89,7 +89,14 @@ class Level extends World with HasGameRef<PixelAdventure> {
             player.position = Vector2(spawnPoint.x, spawnPoint.y);
             player.scale.x = 1;
             player.startingPosition = Vector2(spawnPoint.x, spawnPoint.y);
-            add(player);
+            await add(
+              FlameBlocProvider<ScoreBloc, ScoreState>.value(
+                value: scoreBloc,
+                children: [
+                  player,
+                ],
+              ),
+            );
             break;
           case 'Fruit':
             final fruit = Fruit(
@@ -180,7 +187,14 @@ class Level extends World with HasGameRef<PixelAdventure> {
     add(volumeButton);
     add(nextButton);
     add(previousButton);
-    add(lifeBar);
+    await add(
+      FlameBlocProvider<ScoreBloc, ScoreState>.value(
+        value: scoreBloc,
+        children: [
+          lifeBar,
+        ],
+      ),
+    );
     await add(
       FlameBlocProvider<ScoreBloc, ScoreState>.value(
         value: scoreBloc,
