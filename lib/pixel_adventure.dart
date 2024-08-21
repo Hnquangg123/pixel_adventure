@@ -282,12 +282,16 @@ class PixelAdventure extends FlameGame
     scoreBloc.add(ScoreEventAdded(scoreIncreasing));
   }
 
+  void increaseLife(bool scoreIncreasing) {
+    int liveIncreaseCount = scoreIncreasing ? 1 : 0;
+    scoreBloc.add(LifeEventAdded(1, liveIncreaseCount));
+  }
+
   void decreaseLife() {
     scoreBloc.add(const PlayerDie());
   }
 
   FutureOr<void> loadNewStart() async {
-    
     remove(gameOverScreen);
     firstStart = true;
 

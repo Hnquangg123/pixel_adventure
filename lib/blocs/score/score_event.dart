@@ -13,6 +13,16 @@ class ScoreEventAdded extends ScoreEvent {
   List<Object?> get props => [score];
 }
 
+class LifeEventAdded extends ScoreEvent {
+  const LifeEventAdded(this.live, this.liveIncreaseCount);
+
+  final int live;
+  final int liveIncreaseCount;
+
+  @override
+  List<Object?> get props => [live, liveIncreaseCount];
+}
+
 class PlayerDie extends ScoreEvent {
   const PlayerDie();
 

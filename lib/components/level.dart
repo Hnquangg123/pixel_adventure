@@ -181,7 +181,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
     final volumeButton = VolumeButton(position: Vector2(600, 16));
     final nextButton = NextButton(position: Vector2(580, 16));
     final previousButton = PreviousButton(position: Vector2(560, 16));
-    final lifeBar = LifeBar(position: Vector2(300, 8), size: Vector2.all(24));
+    final lifeBar = LifeBar(size: Vector2.all(24));
     final scoreBar = ScoreBar(position: Vector2(20, 8));
 
     add(volumeButton);

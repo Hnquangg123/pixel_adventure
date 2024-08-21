@@ -6,18 +6,20 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-class ScoreBar extends PositionComponent with HasGameRef<PixelAdventure>, FlameBlocListenable<ScoreBloc, ScoreState> {
+class ScoreBar extends PositionComponent
+    with
+        HasGameRef<PixelAdventure>,
+        FlameBlocListenable<ScoreBloc, ScoreState> {
   late SpriteFontRenderer fontRenderer;
 
-  int gamePoint = 0;
+  late int gamePoint;
   late TextComponent scoreComponent;
 
   ScoreBar({super.position, super.size});
 
   @override
   FutureOr<void> onLoad() {
-
-    gamePoint = game.gamePoint;
+    gamePoint = game.scoreBloc.state.score;
 
     final List<Glyph> glyphs = [
       Glyph('S', left: 64, top: 10),
@@ -63,9 +65,17 @@ class ScoreBar extends PositionComponent with HasGameRef<PixelAdventure>, FlameB
   }
 
   @override
+  bool listenWhen(ScoreState previousState, ScoreState newState) {
+    return newState.score > previousState.score;
+  }
+
+  @override
   void onNewState(ScoreState state) {
     gamePoint = state.score;
     game.gamePoint = state.score;
+    if (state.score >= 25 * state.liveIncreaseCount) {
+      game.increaseLife(true);
+    }
     remove(scoreComponent);
     scoreComponent = TextComponent(
       text: 'SCORE: $gamePoint',

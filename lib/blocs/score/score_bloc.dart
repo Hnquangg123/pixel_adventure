@@ -12,6 +12,12 @@ class ScoreBloc extends Bloc<ScoreEvent, ScoreState> {
       ),
     );
 
+    on<LifeEventAdded>(
+      (event, emit) => emit(
+        state.copyWith(live: state.live + event.live, liveIncreaseCount: state.liveIncreaseCount + event.live),
+      ),
+    );
+
     on<PlayerRespawned>(
       (event, emit) => emit(
         state.copyWith(status: GameStatus.respawned),
