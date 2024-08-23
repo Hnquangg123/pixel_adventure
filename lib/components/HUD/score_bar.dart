@@ -73,7 +73,7 @@ class ScoreBar extends PositionComponent
   void onNewState(ScoreState state) {
     gamePoint = state.score;
     game.gamePoint = state.score;
-    if (state.score >= 25 * state.liveIncreaseCount) {
+    if (state.score >= 50 * state.liveIncreaseCount) {
       game.increaseLife(true);
     }
     remove(scoreComponent);

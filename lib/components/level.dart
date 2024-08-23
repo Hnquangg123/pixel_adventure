@@ -11,6 +11,7 @@ import 'package:pixel_adventure/components/HUD/next_button.dart';
 import 'package:pixel_adventure/components/HUD/score_bar.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/chicken.dart';
+import 'package:pixel_adventure/components/falling_plaform.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/background_tile.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
@@ -138,9 +139,15 @@ class Level extends World with HasGameRef<PixelAdventure> {
               offNeg: offNeg,
               offPos: offPos,
             );
-
             add(chicken);
             break;
+          case 'Falling Platforms':
+            // add chicken
+            final fallingPlatform = FallingPlatform(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+          add(fallingPlatform);
           default:
         }
       }
