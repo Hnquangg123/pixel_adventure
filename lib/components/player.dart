@@ -126,8 +126,7 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Saw) _respawn();
       if (other is Chicken && !reachedCheckPoint) other.collidingWithPlayer();
       if (other is Checkpoint && !reachedCheckPoint) _reachedCheckPoint();
-      if (other is FallingPlatform && !reachedCheckPoint)
-        other.collidingWithPlayer();
+      if (other is FallingPlatform && !reachedCheckPoint) other.collidingWithPlayer();
     }
     super.onCollisionStart(intersectionPoints, other);
   }

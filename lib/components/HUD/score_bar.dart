@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame/text.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
@@ -74,6 +75,7 @@ class ScoreBar extends PositionComponent
     gamePoint = state.score;
     game.gamePoint = state.score;
     if (state.score >= 50 * state.liveIncreaseCount) {
+      FlameAudio.play('life_bonus.wav', volume: game.soundVolume);
       game.increaseLife(true);
     }
     remove(scoreComponent);
