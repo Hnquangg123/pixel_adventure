@@ -5,6 +5,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/player.dart';
+import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 enum State { idle, run, hit }
@@ -35,6 +36,7 @@ class Chicken extends SpriteAnimationGroupComponent
   double moveDirection = 1;
   double targetDirection = -1;
   bool gotStomped = false;
+  bool gotHit = false;
 
   late final Player player;
   late final SpriteAnimation _idleAnimation;
@@ -58,7 +60,7 @@ class Chicken extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    if (!gotStomped) {
+    if (!gotStomped && !gotHit) {
       _updateState();
       _movement(dt);
     }
@@ -137,6 +139,15 @@ class Chicken extends SpriteAnimationGroupComponent
     }
   }
 
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is Saw) {
+      collidingWithSaw(other);
+    }
+    super.onCollisionStart(intersectionPoints, other);
+  }
+
   void collidingWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
       if (game.playSounds) {
@@ -150,6 +161,18 @@ class Chicken extends SpriteAnimationGroupComponent
       removeFromParent();
     } else {
       player.collidedWithEnemy();
+    }
+  }
+
+  void collidingWithSaw(other) async {
+    if (!gotHit) {
+      if (game.playSounds) FlameAudio.play('hit.wav', volume: game.soundVolume);
+      print('chicken hit saw');
+
+      gotHit = true;
+      current = State.hit;
+      await animationTicker?.completed;
+      removeFromParent();
     }
   }
 }

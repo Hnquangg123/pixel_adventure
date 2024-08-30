@@ -6,10 +6,8 @@ import 'package:flame/events.dart';
 import 'package:flame/text.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-class LevelButton extends TextComponent
-    with HasGameRef<PixelAdventure> {
+class LevelButton extends TextComponent with HasGameRef<PixelAdventure> {
   late SpriteFontRenderer fontRenderer;
-
 
   LevelButton({
     super.position,
@@ -52,5 +50,4 @@ class LevelButton extends TextComponent
 
     return super.onLoad();
   }
-
 }

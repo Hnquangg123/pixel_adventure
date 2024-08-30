@@ -8,6 +8,7 @@ import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/components/HUD/life_bar.dart';
 import 'package:pixel_adventure/components/HUD/previous_button.dart';
 import 'package:pixel_adventure/components/HUD/next_button.dart';
+import 'package:pixel_adventure/components/HUD/restart_button.dart';
 import 'package:pixel_adventure/components/HUD/score_bar.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
 import 'package:pixel_adventure/components/chicken.dart';
@@ -188,12 +189,14 @@ class Level extends World with HasGameRef<PixelAdventure> {
     final volumeButton = VolumeButton(position: Vector2(600, 16));
     final nextButton = NextButton(position: Vector2(580, 16));
     final previousButton = PreviousButton(position: Vector2(560, 16));
+    final restartButton = RestartButton(position: Vector2(540, 16));
     final lifeBar = LifeBar(size: Vector2.all(24));
     final scoreBar = ScoreBar(position: Vector2(20, 8));
 
     add(volumeButton);
     add(nextButton);
     add(previousButton);
+    add(restartButton);
     await add(
       FlameBlocProvider<ScoreBloc, ScoreState>.value(
         value: scoreBloc,

@@ -40,7 +40,7 @@ class PixelAdventure extends FlameGame
   late CameraComponent cam;
   late JoystickComponent joystick;
   bool showControls = false;
-  bool playSounds = false;
+  bool playSounds = true;
   double soundVolume = 1.0;
   List<String> levelNames = [
     'Level-01',
@@ -49,6 +49,8 @@ class PixelAdventure extends FlameGame
     'Level-04',
     'Level-05',
     'Level-06',
+    'Level-07',
+    'Level-08',
   ];
   int levelLength = 0;
   int currentLevelIndex = 0;
@@ -172,7 +174,9 @@ class PixelAdventure extends FlameGame
     );
 
     FlameAudio.bgm.stop();
-    FlameAudio.play('game_over.wav', volume: soundVolume);
+    if (playSounds) {
+      FlameAudio.play('game_over.wav', volume: soundVolume);
+    }
 
     gameOverScreen = GameOverScreen(
       onStart: () async {
@@ -200,6 +204,14 @@ class PixelAdventure extends FlameGame
       currentLevelIndex = 1;
       _loadLevel(false);
     }
+  }
+
+  void restartLevel() {
+    removeWhere(
+      (component) => component is Level,
+    );
+
+    _loadLevel(false);
   }
 
   void loadPreviousLevel() {

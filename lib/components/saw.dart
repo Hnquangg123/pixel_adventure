@@ -5,7 +5,6 @@ import 'package:flame/components.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
-
   final bool isVertical;
   final double offNeg;
   final double offPos;
@@ -30,14 +29,13 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
 
   @override
   FutureOr<void> onLoad() {
-
     priority = -1;
     // debugMode = true;
     add(CircleHitbox());
 
     if (isVertical) {
       rangeNeg = position.y - offNeg * tileSize;
-      rangePos = position.y + offPos *  tileSize;
+      rangePos = position.y + offPos * tileSize;
     } else {
       rangeNeg = position.x - offNeg * tileSize;
       rangePos = position.x + offPos * tileSize;
@@ -64,23 +62,22 @@ class Saw extends SpriteAnimationComponent with HasGameRef<PixelAdventure> {
     }
     super.update(dt);
   }
-  
+
   void _moveVertically(double dt) {
     if (position.y >= rangePos) {
       moveDirection = -1;
-    } else if(position.y <= rangeNeg) {
+    } else if (position.y <= rangeNeg) {
       moveDirection = 1;
     }
     position.y += moveDirection * moveSpeed * dt;
   }
-  
+
   void _moveHorizontally(double dt) {
     if (position.x >= rangePos) {
       moveDirection = -1;
-    } else if(position.x <= rangeNeg) {
+    } else if (position.x <= rangeNeg) {
       moveDirection = 1;
     }
     position.x += moveDirection * moveSpeed * dt;
   }
-
 }
