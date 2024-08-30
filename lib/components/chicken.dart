@@ -6,6 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/saw.dart';
+import 'package:pixel_adventure/components/spikes.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 enum State { idle, run, hit }
@@ -142,8 +143,8 @@ class Chicken extends SpriteAnimationGroupComponent
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is Saw) {
-      collidingWithSaw(other);
+    if (other is Saw || other is Spikes) {
+      collidingWithSaw();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -164,7 +165,7 @@ class Chicken extends SpriteAnimationGroupComponent
     }
   }
 
-  void collidingWithSaw(other) async {
+  void collidingWithSaw() async {
     if (!gotHit) {
       if (game.playSounds) FlameAudio.play('hit.wav', volume: game.soundVolume);
       print('chicken hit saw');

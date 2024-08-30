@@ -19,6 +19,7 @@ import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/HUD/volume_button.dart';
+import 'package:pixel_adventure/components/spikes.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 import 'package:pixel_adventure/screens/choose_level_screen.dart';
 
@@ -148,7 +149,17 @@ class Level extends World with HasGameRef<PixelAdventure> {
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
-          add(fallingPlatform);
+            add(fallingPlatform);
+            break;
+          case 'Spikes':
+            // add spikes
+            final spikes = Spikes(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+              isFlip: spawnPoint.properties.getValue('isFlip'),
+            );
+            add(spikes);
+            break;
           default:
         }
       }

@@ -13,6 +13,7 @@ import 'package:pixel_adventure/components/falling_plaform.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/player_hitbox.dart';
 import 'package:pixel_adventure/components/saw.dart';
+import 'package:pixel_adventure/components/spikes.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -123,7 +124,7 @@ class Player extends SpriteAnimationGroupComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if (!reachedCheckPoint) {
       if (other is Fruit) other.collidingWithPlayer();
-      if (other is Saw) _respawn();
+      if (other is Saw || other is Spikes) _respawn();
       if (other is Chicken && !reachedCheckPoint) other.collidingWithPlayer();
       if (other is Checkpoint && !reachedCheckPoint) _reachedCheckPoint();
       if (other is FallingPlatform && !reachedCheckPoint) other.collidingWithPlayer();

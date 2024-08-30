@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="45">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="59">
  <tileset firstgid="1" source="Pixel Adventure.tsx"/>
  <layer id="1" name="Background" width="40" height="23">
   <properties>
@@ -37,55 +37,6 @@
   <object id="12" name="Falling Platforms" type="Falling Platforms" x="192" y="160" width="32" height="10"/>
   <object id="13" name="Apple" type="Fruit" x="320" y="224" width="32" height="32"/>
   <object id="14" name="Apple" type="Fruit" x="320" y="192" width="32" height="32"/>
-  <object id="15" name="Saw" type="Saw" x="160" y="272" width="32" height="32">
-   <properties>
-    <property name="isVertical" type="bool" value="false"/>
-    <property name="offNeg" type="float" value="0"/>
-    <property name="offPos" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="16" name="Saw" type="Saw" x="192" y="272" width="32" height="32">
-   <properties>
-    <property name="isVertical" type="bool" value="false"/>
-    <property name="offNeg" type="float" value="0"/>
-    <property name="offPos" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="17" name="Saw" type="Saw" x="224" y="272" width="32" height="32">
-   <properties>
-    <property name="isVertical" type="bool" value="false"/>
-    <property name="offNeg" type="float" value="0"/>
-    <property name="offPos" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="18" name="Saw" type="Saw" x="256" y="272" width="32" height="32">
-   <properties>
-    <property name="isVertical" type="bool" value="false"/>
-    <property name="offNeg" type="float" value="0"/>
-    <property name="offPos" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="19" name="Saw" type="Saw" x="288" y="272" width="32" height="32">
-   <properties>
-    <property name="isVertical" type="bool" value="false"/>
-    <property name="offNeg" type="float" value="0"/>
-    <property name="offPos" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="20" name="Saw" type="Saw" x="320" y="272" width="32" height="32">
-   <properties>
-    <property name="isVertical" type="bool" value="false"/>
-    <property name="offNeg" type="float" value="0"/>
-    <property name="offPos" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="21" name="Saw" type="Saw" x="352" y="272" width="32" height="32">
-   <properties>
-    <property name="isVertical" type="bool" value="false"/>
-    <property name="offNeg" type="float" value="0"/>
-    <property name="offPos" type="float" value="0"/>
-   </properties>
-  </object>
   <object id="24" name="Falling Platforms" type="Falling Platforms" x="192" y="96" width="32" height="10"/>
   <object id="25" name="Falling Platforms" type="Falling Platforms" x="256" y="112" width="32" height="10"/>
   <object id="26" name="Falling Platforms" type="Falling Platforms" x="320" y="96" width="32" height="10"/>
@@ -123,6 +74,76 @@
   <object id="42" name="Apple" type="Fruit" x="512" y="128" width="32" height="32"/>
   <object id="43" name="Apple" type="Fruit" x="512" y="160" width="32" height="32"/>
   <object id="44" name="Falling Platforms" type="Falling Platforms" x="160" y="240" width="32" height="10"/>
+  <object id="45" name="Spikes" type="Spikes" x="160" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="46" name="Spikes" type="Spikes" x="176" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="47" name="Spikes" type="Spikes" x="192" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="48" name="Spikes" type="Spikes" x="208" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="49" name="Spikes" type="Spikes" x="224" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="50" name="Spikes" type="Spikes" x="240" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="51" name="Spikes" type="Spikes" x="256" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="52" name="Spikes" type="Spikes" x="272" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="53" name="Spikes" type="Spikes" x="288" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="54" name="Spikes" type="Spikes" x="304" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="55" name="Spikes" type="Spikes" x="320" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="56" name="Spikes" type="Spikes" x="336" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="57" name="Spikes" type="Spikes" x="352" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="58" name="Spikes" type="Spikes" x="368" y="288" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="3" name="Collisions">
   <object id="1" x="64" y="304" width="512" height="16"/>
