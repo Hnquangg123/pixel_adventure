@@ -71,9 +71,11 @@ flutter:
     - assets/images/Background/
     - assets/images/Terrain/
     - assets/images/HUD/
+    - assets/images/Life Bars/
     - assets/images/Menu/Buttons/
     - assets/images/Menu/Text/
     - assets/images/Enemies/Chicken/
+    - assets/images/Enemies/Skull/
     - assets/images/Items/Fruits/
     - assets/images/Items/Heart/
     - assets/images/Items/Checkpoints/Checkpoint/
