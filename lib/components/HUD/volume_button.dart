@@ -29,11 +29,17 @@ class VolumeButton extends SpriteComponent
 
     if (game.playSounds) {
       if (!FlameAudio.bgm.isPlaying) {
-        FlameAudio.bgm
-            .play('1-06. Dungeon (Spelunker Theme).mp3', volume: 0.25);
+        // print(game.currentLevelIndex);
+        if (game.currentLevelIndex == 10) {
+          FlameAudio.bgm
+              .play('Action 3 - Loop - Pure (Boss Fight).wav', volume: 0.25);
+        } else {
+          FlameAudio.bgm
+              .play('1-06. Dungeon (Spelunker Theme).mp3', volume: 0.25);
+        }
       }
     }
-    
+
     if (!game.playSounds) {
       if (FlameAudio.bgm.isPlaying) {
         FlameAudio.bgm.stop();

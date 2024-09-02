@@ -11,7 +11,8 @@ import 'package:pixel_adventure/components/HUD/next_button.dart';
 import 'package:pixel_adventure/components/HUD/restart_button.dart';
 import 'package:pixel_adventure/components/HUD/score_bar.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
-import 'package:pixel_adventure/components/chicken.dart';
+import 'package:pixel_adventure/components/enemies/skull.dart';
+import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/falling_plaform.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/background_tile.dart';
@@ -47,8 +48,13 @@ class Level extends World with HasGameRef<PixelAdventure> {
       level = await TiledComponent.load("$levelName.tmx", Vector2.all(16));
 
       if (game.playSounds) {
-        FlameAudio.bgm
-            .play('1-06. Dungeon (Spelunker Theme).mp3', volume: 0.25);
+        if (game.currentLevelIndex == 10) {
+          FlameAudio.bgm
+              .play('Action 3 - Loop - Pure (Boss Fight).wav', volume: 0.25);
+        } else {
+          FlameAudio.bgm
+              .play('1-06. Dungeon (Spelunker Theme).mp3', volume: 0.25);
+        }
       }
 
       if (!game.playSounds) {
@@ -132,16 +138,32 @@ class Level extends World with HasGameRef<PixelAdventure> {
             break;
           case 'Enemies':
             // add chicken
-            final offNeg = spawnPoint.properties.getValue('offNeg');
-            final offPos = spawnPoint.properties.getValue('offPos');
-            final chicken = Chicken(
-              enemyName: spawnPoint.name,
-              position: Vector2(spawnPoint.x, spawnPoint.y),
-              size: Vector2(spawnPoint.width, spawnPoint.height),
-              offNeg: offNeg,
-              offPos: offPos,
-            );
-            add(chicken);
+            switch (spawnPoint.name) {
+              case 'Chicken':
+                final offNeg = spawnPoint.properties.getValue('offNeg');
+                final offPos = spawnPoint.properties.getValue('offPos');
+                final chicken = Chicken(
+                  enemyName: spawnPoint.name,
+                  position: Vector2(spawnPoint.x, spawnPoint.y),
+                  size: Vector2(spawnPoint.width, spawnPoint.height),
+                  offNeg: offNeg,
+                  offPos: offPos,
+                );
+                add(chicken);
+                break;
+              case 'Skull':
+                final offNeg = spawnPoint.properties.getValue('offNeg');
+                final offPos = spawnPoint.properties.getValue('offPos');
+                final skullBoss = Skull(
+                  position: Vector2(spawnPoint.x, spawnPoint.y),
+                  size: Vector2(spawnPoint.width, spawnPoint.height),
+                  offNeg: offNeg,
+                  offPos: offPos,
+                );
+                add(skullBoss);
+                break;
+              default:
+            }
             break;
           case 'Falling Platforms':
             // add chicken

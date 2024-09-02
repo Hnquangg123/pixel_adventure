@@ -7,8 +7,9 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
-import 'package:pixel_adventure/components/chicken.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
+import 'package:pixel_adventure/components/enemies/chicken.dart';
+import 'package:pixel_adventure/components/enemies/skull.dart';
 import 'package:pixel_adventure/components/falling_plaform.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/player_hitbox.dart';
@@ -128,6 +129,7 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Chicken && !reachedCheckPoint) other.collidingWithPlayer();
       if (other is Checkpoint && !reachedCheckPoint) _reachedCheckPoint();
       if (other is FallingPlatform && !reachedCheckPoint) other.collidingWithPlayer();
+      if (other is Skull) other.collidingWithPlayer();
     }
     super.onCollisionStart(intersectionPoints, other);
   }

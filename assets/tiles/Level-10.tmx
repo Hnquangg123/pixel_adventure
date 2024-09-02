@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="30">
+ <tileset firstgid="1" source="Pixel Adventure.tsx"/>
+ <layer id="1" name="Background" width="40" height="23">
+  <data encoding="csv">
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,92,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,93,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,111,24,24,24,
+24,24,24,113,51,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,53,111,24,24,24,
+24,24,24,114,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,115,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24
+</data>
+ </layer>
+ <objectgroup id="2" name="Spawnpoints">
+  <object id="6" name="Player" type="Player" x="96" y="240" width="32" height="32"/>
+  <object id="9" name="Checkpoint" type="Checkpoint" x="512" y="208" width="64" height="64"/>
+  <object id="10" name="Falling Platforms" type="Falling Platforms" x="96" y="208" width="32" height="10"/>
+  <object id="11" name="Falling Platforms" type="Falling Platforms" x="160" y="192" width="32" height="10"/>
+  <object id="12" name="Falling Platforms" type="Falling Platforms" x="224" y="208" width="32" height="10"/>
+  <object id="13" name="Falling Platforms" type="Falling Platforms" x="288" y="192" width="32" height="10"/>
+  <object id="14" name="Falling Platforms" type="Falling Platforms" x="352" y="208" width="32" height="10"/>
+  <object id="15" name="Falling Platforms" type="Falling Platforms" x="416" y="192" width="32" height="10"/>
+  <object id="16" name="Falling Platforms" type="Falling Platforms" x="96" y="144" width="32" height="10"/>
+  <object id="17" name="Falling Platforms" type="Falling Platforms" x="160" y="96" width="32" height="10"/>
+  <object id="18" name="Falling Platforms" type="Falling Platforms" x="224" y="144" width="32" height="10"/>
+  <object id="19" name="Falling Platforms" type="Falling Platforms" x="288" y="96" width="32" height="10"/>
+  <object id="20" name="Falling Platforms" type="Falling Platforms" x="352" y="144" width="32" height="10"/>
+  <object id="21" name="Falling Platforms" type="Falling Platforms" x="416" y="96" width="32" height="10"/>
+  <object id="22" name="Falling Platforms" type="Falling Platforms" x="480" y="144" width="32" height="10"/>
+  <object id="23" name="Falling Platforms" type="Falling Platforms" x="224" y="80" width="32" height="10"/>
+  <object id="24" name="Falling Platforms" type="Falling Platforms" x="352" y="80" width="32" height="10"/>
+  <object id="25" name="Falling Platforms" type="Falling Platforms" x="480" y="80" width="32" height="10"/>
+  <object id="26" name="Falling Platforms" type="Falling Platforms" x="480" y="208" width="32" height="10"/>
+  <object id="27" name="Falling Platforms" type="Falling Platforms" x="96" y="80" width="32" height="10"/>
+  <object id="29" name="Skull" type="Enemies" x="416" y="216" width="48" height="56">
+   <properties>
+    <property name="offNeg" type="float" value="22"/>
+    <property name="offPos" type="float" value="7"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="Collisions">
+  <object id="1" x="64" y="272" width="512" height="32"/>
+  <object id="2" x="64" y="304" width="512" height="16"/>
+  <object id="3" x="48" y="32" width="16" height="288"/>
+  <object id="4" x="48" y="32" width="544" height="16"/>
+  <object id="5" x="576" y="32" width="16" height="288"/>
+ </objectgroup>
+</map>
