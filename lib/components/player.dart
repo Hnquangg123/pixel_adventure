@@ -7,6 +7,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
+import 'package:pixel_adventure/components/checkpoint_end.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/enemies/skull.dart';
@@ -128,6 +129,7 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Saw || other is Spikes) _respawn();
       if (other is Chicken && !reachedCheckPoint) other.collidingWithPlayer();
       if (other is Checkpoint && !reachedCheckPoint) _reachedCheckPoint();
+      if (other is CheckpointEnd && !reachedCheckPoint) _reachedCheckPoint();
       if (other is FallingPlatform && !reachedCheckPoint) other.collidingWithPlayer();
       if (other is Skull) other.collidingWithPlayer();
     }

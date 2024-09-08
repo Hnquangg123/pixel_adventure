@@ -30,7 +30,7 @@
  </layer>
  <objectgroup id="2" name="Spawnpoints">
   <object id="6" name="Player" type="Player" x="96" y="240" width="32" height="32"/>
-  <object id="9" name="Checkpoint" type="Checkpoint" x="512" y="208" width="64" height="64"/>
+  <object id="9" name="End" type="End" x="512" y="208" width="64" height="64"/>
   <object id="10" name="Falling Platforms" type="Falling Platforms" x="96" y="208" width="32" height="10"/>
   <object id="11" name="Falling Platforms" type="Falling Platforms" x="160" y="192" width="32" height="10"/>
   <object id="12" name="Falling Platforms" type="Falling Platforms" x="224" y="208" width="32" height="10"/>

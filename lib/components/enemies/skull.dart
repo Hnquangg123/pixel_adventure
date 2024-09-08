@@ -30,8 +30,10 @@ class Skull extends SpriteAnimationGroupComponent
   double rangePos = 0;
   double tileSize = 16;
   double moveDirection = -1;
-  bool init = true;
-  final explodeDuration = const Duration(milliseconds: 1800);
+  bool init = false;
+  final initStandByDuration = const Duration(seconds: 3);
+  final explodeDuration = const Duration(milliseconds: 1000);
+  final vanishDuration = const Duration(milliseconds: 1500);
 
   Timer? spawnTimer;
   final spawnDuration = const Duration(milliseconds: 500);
@@ -78,6 +80,11 @@ class Skull extends SpriteAnimationGroupComponent
       _addSkullParticles();
     });
 
+    Future.delayed(
+      initStandByDuration,
+      () => init = true,
+    );
+
     return super.onLoad();
   }
 
@@ -88,15 +95,19 @@ class Skull extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    if (init) {
-      Future.delayed(
-        Duration(seconds: 3),
-        () => _updateMovement(dt),
-      );
-    } else {
-      if (live > 0) {
-        _updateMovement(dt);
-      }
+    // if (init && live > 0) {
+    //   Future.delayed(
+    //     Duration(seconds: 3),
+    //     () => _updateMovement(dt),
+    //   );
+    // } else {
+    //   if (live > 0) {
+    //     _updateMovement(dt);
+    //   }
+    // }
+
+    if (live > 0 && init) {
+      _updateMovement(dt);
     }
 
     // _updateState();
@@ -176,7 +187,7 @@ class Skull extends SpriteAnimationGroupComponent
         count: 72,
         lifespan: 4,
         generator: (p0) => AcceleratedParticle(
-          position: Vector2(39, 45),
+          position: Vector2(26, 40),
           acceleration: randomVector2(),
           speed: Vector2(0.5, 1),
           child: ImageParticle(
@@ -255,15 +266,24 @@ class Skull extends SpriteAnimationGroupComponent
       }
 
       if (live == 0) {
-        _hitAnimation.loop = true;
         current = State.hit;
+        _hitAnimation.loop = true;
+        gotHit = false;
         invincible = true;
         player.velocity.y = -_bounceHeight;
-        
-        _addSkullParticlesOnDeath();
 
         Future.delayed(
           explodeDuration,
+          () => _hitAnimation.loop = false,
+        );
+
+        await animationTicker?.completed;
+        animationTicker?.reset();
+
+        _addSkullParticlesOnDeath();
+
+        Future.delayed(
+          vanishDuration,
           () => removeFromParent(),
         );
       }

@@ -79,6 +79,7 @@ flutter:
     - assets/images/Items/Fruits/
     - assets/images/Items/Heart/
     - assets/images/Items/Checkpoints/Checkpoint/
+    - assets/images/Items/Checkpoints/End/
     - assets/images/Traps/Saw/
     - assets/images/Traps/Spikes/
     - assets/images/Traps/Falling Platforms/

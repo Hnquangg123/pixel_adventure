@@ -11,6 +11,7 @@ import 'package:pixel_adventure/components/HUD/next_button.dart';
 import 'package:pixel_adventure/components/HUD/restart_button.dart';
 import 'package:pixel_adventure/components/HUD/score_bar.dart';
 import 'package:pixel_adventure/components/checkpoint.dart';
+import 'package:pixel_adventure/components/checkpoint_end.dart';
 import 'package:pixel_adventure/components/enemies/skull.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/falling_plaform.dart';
@@ -181,6 +182,14 @@ class Level extends World with HasGameRef<PixelAdventure> {
               isFlip: spawnPoint.properties.getValue('isFlip'),
             );
             add(spikes);
+            break;
+          case 'End':
+            final checkPointEnd = CheckpointEnd(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+
+            add(checkPointEnd);
             break;
           default:
         }
