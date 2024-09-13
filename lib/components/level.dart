@@ -4,6 +4,8 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter/material.dart';
+import 'package:pixel_adventure/blocs/level/level_bloc.dart';
 import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/components/HUD/life_bar.dart';
 import 'package:pixel_adventure/components/HUD/previous_button.dart';
@@ -15,6 +17,7 @@ import 'package:pixel_adventure/components/checkpoint_end.dart';
 import 'package:pixel_adventure/components/enemies/skull.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/falling_plaform.dart';
+import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/background_tile.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
@@ -25,7 +28,7 @@ import 'package:pixel_adventure/components/spikes.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 import 'package:pixel_adventure/screens/choose_level_screen.dart';
 
-class Level extends World with HasGameRef<PixelAdventure> {
+class Level extends World with HasGameRef<PixelAdventure>, FlameBlocListenable<LevelBloc, LevelState> {
   final String levelName;
   final Player player;
   final bool isChooseLevel;
@@ -36,6 +39,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
     required this.isChooseLevel,
     required this.scoreBloc,
   });
+  late JoystickComponent joystick;
   late TiledComponent level;
   late ChooseLevelScreen levelScreen;
   List<CollisionBlock> collisionBlock = [];
@@ -73,6 +77,51 @@ class Level extends World with HasGameRef<PixelAdventure> {
     return super.onLoad();
   }
 
+  @override
+  void update(double dt) {
+    if (game.showControls && !isChooseLevel) {
+      updateJoyStick();
+    }
+    super.update(dt);
+  }
+
+  void addJoyStick() {
+    joystick = JoystickComponent(
+      knob: SpriteComponent(
+        sprite: Sprite(
+          game.images.fromCache('HUD/Knob.png'),
+        ),
+      ),
+      background: SpriteComponent(
+        sprite: Sprite(
+          game.images.fromCache('HUD/Joystick.png'),
+        ),
+      ),
+      margin: const EdgeInsets.only(left: 8, bottom: 48),
+    );
+    
+    game.cam.viewport.addAll([joystick, JumpButton(levelSizeX: level.size.x, levelSizeY: level.size.y)]);
+    // addAll([joystick, JumpButton(level: this)]);
+  }
+
+  void updateJoyStick() {
+    switch (joystick.direction) {
+      case JoystickDirection.left:
+      case JoystickDirection.upLeft:
+      case JoystickDirection.downLeft:
+        player.horizontalMovement = -1;
+        break;
+      case JoystickDirection.right:
+      case JoystickDirection.upRight:
+      case JoystickDirection.downRight:
+        player.horizontalMovement = 1;
+        break;
+      default:
+        player.horizontalMovement = 0;
+        break;
+    }
+  }
+
   void _scrollingBackground() {
     final backgroundLayer = level.tileMap.getLayer('Background');
 
@@ -93,7 +142,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
     final spawmPointsLayer = level.tileMap.getLayer<ObjectGroup>('Spawnpoints');
 
     if (spawmPointsLayer != null) {
-      for (final spawnPoint in spawmPointsLayer!.objects) {
+      for (final spawnPoint in spawmPointsLayer.objects) {
         switch (spawnPoint.class_) {
           case 'Player':
             player.position = Vector2(spawnPoint.x, spawnPoint.y);
@@ -234,6 +283,10 @@ class Level extends World with HasGameRef<PixelAdventure> {
     final restartButton = RestartButton(position: Vector2(540, 16));
     final lifeBar = LifeBar(size: Vector2.all(24));
     final scoreBar = ScoreBar(position: Vector2(20, 8));
+
+    if (game.showControls && !isChooseLevel) {
+      addJoyStick();
+    }
 
     add(volumeButton);
     add(nextButton);

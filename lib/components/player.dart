@@ -36,7 +36,7 @@ class Player extends SpriteAnimationGroupComponent
         CollisionCallbacks,
         FlameBlocListenable<ScoreBloc, ScoreState> {
   String character;
-  Player({position, this.character = 'Ninja Frog'}) : super(position: position);
+  Player({position, this.character = 'Ninja Frog',}) : super(position: position);
 
   double horizontalMovement = 0;
   double moveSpeed = 100;
@@ -128,10 +128,12 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Fruit) other.collidingWithPlayer();
       if (other is Saw || other is Spikes) _respawn();
       if (other is Chicken && !reachedCheckPoint) other.collidingWithPlayer();
-      if (other is Checkpoint && !reachedCheckPoint) _reachedCheckPoint();
-      if (other is CheckpointEnd && !reachedCheckPoint) _reachedCheckPoint();
+      if (other is Checkpoint && !reachedCheckPoint) _reachedCheckPoint(false);
+      if (other is CheckpointEnd && !reachedCheckPoint) _reachedCheckPoint(true);
       if (other is FallingPlatform && !reachedCheckPoint) other.collidingWithPlayer();
-      if (other is Skull) other.collidingWithPlayer();
+      if (other is Skull) {
+        other.collidingWithPlayer();
+      }
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -321,11 +323,15 @@ class Player extends SpriteAnimationGroupComponent
     // here we handle life point END
   }
 
-  Future<void> _reachedCheckPoint() async {
+  Future<void> _reachedCheckPoint(bool isEndCheckPoint) async {
     reachedCheckPoint = true;
 
     if (game.playSounds) {
       FlameAudio.play('disappear.wav', volume: game.soundVolume);
+    }
+
+    if (game.playSounds && isEndCheckPoint) {
+      FlameAudio.play('1-09. Level Complete.mp3', volume: game.soundVolume);
     }
 
     if (scale.x > 0) {

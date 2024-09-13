@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+import 'package:pixel_adventure/blocs/level/level_bloc.dart';
 import 'package:pixel_adventure/blocs/score/score_bloc.dart';
 import 'package:pixel_adventure/components/HUD/score_bar.dart';
-import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/level.dart';
 import 'package:pixel_adventure/screens/choose_level_screen.dart';
@@ -35,12 +34,13 @@ class PixelAdventure extends FlameGame
   bool firstStart = true;
 
   late ScoreBloc scoreBloc;
+  late LevelBloc levelBloc;
 
   late Player player;
   late CameraComponent cam;
-  late JoystickComponent joystick;
-  bool showControls = true;
-  bool playSounds = true;
+  // late JoystickComponent joystick;
+  bool showControls = false;
+  bool playSounds = false;
   double soundVolume = 1.0;
   List<String> levelNames = [
     'Level-01',
@@ -70,11 +70,14 @@ class PixelAdventure extends FlameGame
     FlameAudio.bgm.initialize;
     FlameAudio.audioCache.loadAll;
 
+    priority = 0;
+
     // Init Player
     player = Player(character: 'Mask Dude');
 
-    // Init ScoreBar & Bloc
+    // Init Bloc
     scoreBloc = ScoreBloc();
+    levelBloc = LevelBloc();
     // scoreBar = ScoreBar(position: Vector2(99, 99));
 
     // add Bloc to manage score
@@ -98,9 +101,9 @@ class PixelAdventure extends FlameGame
       FlameAudio.bgm.play('1-01. Title Screen.mp3', volume: 0.25);
     }
 
-    if (showControls) {
-      addJoyStick();
-    }
+    // if (showControls) {
+    //   addJoyStick();
+    // }
 
     return super.onLoad();
   }
@@ -125,54 +128,54 @@ class PixelAdventure extends FlameGame
     super.didChangeAppLifecycleState(state);
   }
 
-  @override
-  void update(double dt) {
-    if (showControls) {
-      updateJoyStick();
-    }
-    super.update(dt);
-  }
+  // @override
+  // void update(double dt) {
+  //   if (showControls) {
+  //     updateJoyStick();
+  //   }
+  //   super.update(dt);
+  // }
 
-  void addJoyStick() {
-    joystick = JoystickComponent(
-      knob: SpriteComponent(
-        sprite: Sprite(
-          images.fromCache('HUD/Knob.png'),
-        ),
-      ),
-      background: SpriteComponent(
-        sprite: Sprite(
-          images.fromCache('HUD/Joystick.png'),
-        ),
-      ),
-      margin: const EdgeInsets.only(left: 32, bottom: 32),
-    );
+  // void addJoyStick() {
+  //   joystick = JoystickComponent(
+  //     knob: SpriteComponent(
+  //       sprite: Sprite(
+  //         images.fromCache('HUD/Knob.png'),
+  //       ),
+  //     ),
+  //     background: SpriteComponent(
+  //       sprite: Sprite(
+  //         images.fromCache('HUD/Joystick.png'),
+  //       ),
+  //     ),
+  //     margin: const EdgeInsets.only(left: 32, bottom: 32),
+  //   );
 
-    // cam.viewport.addAll([joystick, JumpButton()]);
-    addAll([joystick, JumpButton()]);
-  }
+  //   // cam.viewport.addAll([joystick, JumpButton()]);
+  //   addAll([joystick, JumpButton()]);
+  // }
 
-  void updateJoyStick() {
-    switch (joystick.direction) {
-      case JoystickDirection.left:
-      case JoystickDirection.upLeft:
-      case JoystickDirection.downLeft:
-        player.horizontalMovement = -1;
-        break;
-      case JoystickDirection.right:
-      case JoystickDirection.upRight:
-      case JoystickDirection.downRight:
-        player.horizontalMovement = 1;
-        break;
-      default:
-        player.horizontalMovement = 0;
-        break;
-    }
-  }
+  // void updateJoyStick() {
+  //   switch (joystick.direction) {
+  //     case JoystickDirection.left:
+  //     case JoystickDirection.upLeft:
+  //     case JoystickDirection.downLeft:
+  //       player.horizontalMovement = -1;
+  //       break;
+  //     case JoystickDirection.right:
+  //     case JoystickDirection.upRight:
+  //     case JoystickDirection.downRight:
+  //       player.horizontalMovement = 1;
+  //       break;
+  //     default:
+  //       player.horizontalMovement = 0;
+  //       break;
+  //   }
+  // }
 
   Future<void> gameOver() async {
     removeWhere(
-      (component) => component is Level,
+      (component) => component is FlameBlocProvider,
     );
 
     FlameAudio.bgm.stop();
@@ -195,7 +198,7 @@ class PixelAdventure extends FlameGame
 
   void loadNextLevel() {
     removeWhere(
-      (component) => component is Level,
+      (component) => component is FlameBlocProvider,
     );
 
     // if (currentLevelIndex < levelLength) {
@@ -210,7 +213,7 @@ class PixelAdventure extends FlameGame
 
   void restartLevel() {
     removeWhere(
-      (component) => component is Level,
+      (component) => component is FlameBlocProvider,
     );
 
     _loadLevel(false);
@@ -218,7 +221,7 @@ class PixelAdventure extends FlameGame
 
   void loadPreviousLevel() {
     removeWhere(
-      (component) => component is Level,
+      (component) => component is FlameBlocProvider,
     );
 
     // if (currentLevelIndex < levelLength) {
@@ -261,7 +264,15 @@ class PixelAdventure extends FlameGame
         // if (!isChooseLevel) {
         // }
         remove(loadScreen);
-        addAll([cam, world]);
+        addAll([
+          cam,
+          FlameBlocProvider<LevelBloc, LevelState>.value(
+            value: levelBloc,
+            children: [
+              world,
+            ],
+          ),
+        ]);
       },
     );
   }
@@ -271,7 +282,7 @@ class PixelAdventure extends FlameGame
 
     Future.delayed(
       const Duration(seconds: 1),
-      () {
+      () async {
         Level world = Level(
           levelName: 'Level-$level',
           player: player,
@@ -286,7 +297,15 @@ class PixelAdventure extends FlameGame
 
         cam.viewfinder.anchor = Anchor.topLeft;
         remove(loadScreen);
-        addAll([cam, world]);
+        await addAll([
+          cam,
+          FlameBlocProvider<LevelBloc, LevelState>.value(
+            value: levelBloc,
+            children: [
+              world,
+            ],
+          ),
+        ]);
       },
     );
   }
@@ -294,19 +313,6 @@ class PixelAdventure extends FlameGame
   void showLevelSelection() {
     remove(startScreen);
     // create level selection screen and add it into the game
-  }
-
-  void increaseScore(int scoreIncreasing) {
-    scoreBloc.add(ScoreEventAdded(scoreIncreasing));
-  }
-
-  void increaseLife(bool scoreIncreasing) {
-    int liveIncreaseCount = scoreIncreasing ? 1 : 0;
-    scoreBloc.add(LifeEventAdded(1, liveIncreaseCount));
-  }
-
-  void decreaseLife() {
-    scoreBloc.add(const PlayerDie());
   }
 
   FutureOr<void> loadNewStart() async {
@@ -318,6 +324,7 @@ class PixelAdventure extends FlameGame
 
     // Init ScoreBar & Bloc
     scoreBloc = ScoreBloc();
+    levelBloc = LevelBloc();
     // scoreBar = ScoreBar(position: Vector2(99, 99));
 
     // add Bloc to manage score
@@ -341,6 +348,23 @@ class PixelAdventure extends FlameGame
       FlameAudio.bgm.play('1-01. Title Screen.mp3', volume: 0.25);
     }
   }
+
+  // Manage State Score & Life
+
+  void increaseScore(int scoreIncreasing) {
+    scoreBloc.add(ScoreEventAdded(scoreIncreasing));
+  }
+
+  void increaseLife(bool scoreIncreasing) {
+    int liveIncreaseCount = scoreIncreasing ? 1 : 0;
+    scoreBloc.add(LifeEventAdded(1, liveIncreaseCount));
+  }
+
+  void decreaseLife() {
+    scoreBloc.add(const PlayerDie());
+  }
+
+  // Manage State Level
 
   // void _loadLevelScreen() {
   //   if (firstStart) {

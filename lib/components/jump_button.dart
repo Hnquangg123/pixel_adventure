@@ -6,9 +6,13 @@ import 'package:pixel_adventure/pixel_adventure.dart';
 
 class JumpButton extends SpriteComponent
     with HasGameRef<PixelAdventure>, TapCallbacks {
-  JumpButton();
 
-  final margin = 32;
+  final double levelSizeX;
+  final double levelSizeY;
+
+  JumpButton({required this.levelSizeX, required this.levelSizeY});
+
+  final margin = 16;
   final buttonSize = 64;
 
   @override
@@ -16,8 +20,8 @@ class JumpButton extends SpriteComponent
     sprite = Sprite(game.images.fromCache('HUD/JumpButton.png'));
 
     position = Vector2(
-      game.size.x - margin - buttonSize,
-      game.size.y - margin - buttonSize,
+      levelSizeX - margin - buttonSize + 16,
+      levelSizeY - margin - buttonSize - 32,
     );
 
     priority = 2;

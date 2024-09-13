@@ -38,7 +38,7 @@ class Skull extends SpriteAnimationGroupComponent
   Timer? spawnTimer;
   final spawnDuration = const Duration(milliseconds: 500);
 
-  Random _rnd = Random();
+  final Random _rnd = Random();
 
   Vector2 randomVector2() => (Vector2.random(_rnd) - Vector2(0.5, 1)) * 180;
 
@@ -56,7 +56,7 @@ class Skull extends SpriteAnimationGroupComponent
   // boss state
   bool gotHit = false;
   bool invincible = false;
-  int live = 1;
+  int live = 2;
 
   @override
   FutureOr<void> onLoad() {
@@ -88,10 +88,6 @@ class Skull extends SpriteAnimationGroupComponent
     return super.onLoad();
   }
 
-  @override
-  void onMount() {
-    super.onMount();
-  }
 
   @override
   void update(double dt) {
@@ -223,7 +219,7 @@ class Skull extends SpriteAnimationGroupComponent
     add(offFireHitBox);
 
     Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 4),
       () async {
         if (gotHit) {
           spawnTimer = Timer.periodic(spawnDuration, (_) {
@@ -280,11 +276,19 @@ class Skull extends SpriteAnimationGroupComponent
         await animationTicker?.completed;
         animationTicker?.reset();
 
+        if (game.playSounds) {
+          FlameAudio.play('explosion.wav', volume: game.soundVolume);
+        }
         _addSkullParticlesOnDeath();
 
         Future.delayed(
           vanishDuration,
-          () => removeFromParent(),
+          () {
+            if (game.playSounds) {
+              FlameAudio.bgm.stop();
+            }
+            removeFromParent();
+          },
         );
       }
 
