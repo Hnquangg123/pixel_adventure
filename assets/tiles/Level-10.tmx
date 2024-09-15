@@ -2,6 +2,9 @@
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="30">
  <tileset firstgid="1" source="Pixel Adventure.tsx"/>
  <layer id="1" name="Background" width="40" height="23">
+  <properties>
+   <property name="BackgroundColor" value="Gray"/>
+  </properties>
   <data encoding="csv">
 24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
 24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
@@ -29,7 +32,7 @@
 </data>
  </layer>
  <objectgroup id="2" name="Spawnpoints">
-  <object id="6" name="Player" type="Player" x="96" y="240" width="32" height="32"/>
+  <object id="6" name="Mask Dude" type="Player" x="96" y="240" width="32" height="32"/>
   <object id="9" name="End" type="End" x="512" y="208" width="64" height="64"/>
   <object id="10" name="Falling Platforms" type="Falling Platforms" x="96" y="208" width="32" height="10"/>
   <object id="11" name="Falling Platforms" type="Falling Platforms" x="160" y="192" width="32" height="10"/>

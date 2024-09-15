@@ -57,7 +57,7 @@
   <object id="15" name="Kiwi" type="Fruit" x="256" y="64" width="32" height="32"/>
   <object id="16" name="Kiwi" type="Fruit" x="192" y="96" width="32" height="32"/>
   <object id="17" name="Kiwi" type="Fruit" x="192" y="64" width="32" height="32"/>
-  <object id="18" name="Player" type="Player" x="432" y="96" width="32" height="32"/>
+  <object id="18" name="Mask Dude" type="Player" x="432" y="96" width="32" height="32"/>
   <object id="20" name="Saw" type="Saw" x="96" y="272" width="32" height="32">
    <properties>
     <property name="isVertical" type="bool" value="false"/>

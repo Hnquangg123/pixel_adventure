@@ -42,6 +42,7 @@ class PixelAdventure extends FlameGame
   bool showControls = false;
   bool playSounds = false;
   double soundVolume = 1.0;
+  bool changeCharacter = false;
   List<String> levelNames = [
     'Level-01',
     'Level-02',
@@ -53,6 +54,7 @@ class PixelAdventure extends FlameGame
     'Level-08',
     'Level-09',
     'Level-10',
+    'Level-11',
   ];
   int levelLength = 0;
   int currentLevelIndex = 0;
@@ -73,7 +75,7 @@ class PixelAdventure extends FlameGame
     priority = 0;
 
     // Init Player
-    player = Player(character: 'Mask Dude');
+    player = Player();
 
     // Init Bloc
     scoreBloc = ScoreBloc();
@@ -241,6 +243,30 @@ class PixelAdventure extends FlameGame
       FlameAudio.bgm.stop();
     }
 
+    // Handle character change for each chapter
+    if (currentLevelIndex <= 10 && player.character != 'Mask Dude') {
+        changeCharacter = true;
+        print('this is mask dude, your system character before changing: ' + player.character);
+        reachChapterOne();
+    }
+    if (currentLevelIndex > 10 && currentLevelIndex <= 20 && player.character != 'Ninja Frog') {
+        changeCharacter = true;
+        print('this is ninja frog, your system character before changing: ' + player.character);
+        reachChapterTwo();
+    }
+    if (currentLevelIndex > 20 && currentLevelIndex <= 30 && player.character != 'Pink Man') {
+        changeCharacter = true;
+        reachChapterThree();
+    }
+    if (currentLevelIndex > 30 && currentLevelIndex <= 40 && player.character != 'Virtual Guy') {
+        changeCharacter = true;
+        reachChapterFour();
+    }
+    if (currentLevelIndex > 40 && currentLevelIndex <= 50 && player.character != 'Mask Dude') {
+        changeCharacter = true;
+        reachChapterFive();
+    }
+
     // if (!isChooseLevel) {
     // }
     add(loadScreen);
@@ -365,6 +391,30 @@ class PixelAdventure extends FlameGame
   }
 
   // Manage State Level
+
+  void bossKilled() {
+    levelBloc.add(const BossKilled());
+  }
+
+  void reachChapterOne() {
+    levelBloc.add(const ReachChapterOne());
+  }
+
+  void reachChapterTwo() {
+    levelBloc.add(const ReachChapterTwo());
+  }
+
+  void reachChapterThree() {
+    levelBloc.add(const ReachChapterThree());
+  }
+
+  void reachChapterFour() {
+    levelBloc.add(const ReachChapterFour());
+  }
+  
+  void reachChapterFive() {
+    levelBloc.add(const ReachChapterFive());
+  }
 
   // void _loadLevelScreen() {
   //   if (firstStart) {

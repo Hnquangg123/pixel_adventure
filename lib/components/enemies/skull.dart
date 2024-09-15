@@ -88,7 +88,6 @@ class Skull extends SpriteAnimationGroupComponent
     return super.onLoad();
   }
 
-
   @override
   void update(double dt) {
     // if (init && live > 0) {
@@ -197,19 +196,18 @@ class Skull extends SpriteAnimationGroupComponent
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is FallingPlatform && !gotHit) {
+    if (other is FallingPlatform && !gotHit && !invincible) {
       collingWithFallingPlatform();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
 
   void collingWithFallingPlatform() async {
-    gotHit = true;
-
     current = State.transform2;
 
     await animationTicker?.completed;
     animationTicker?.reset();
+    gotHit = true;
 
     current = State.idle2;
 
@@ -255,13 +253,13 @@ class Skull extends SpriteAnimationGroupComponent
 
       if (live > 0) {
         current = State.hit;
-        invincible = true;
         player.velocity.y = -_bounceHeight;
+        invincible = true;
         await animationTicker?.completed;
         animationTicker?.reset();
       }
 
-      if (live == 0) {
+      if (live == 0 && !invincible) {
         current = State.hit;
         _hitAnimation.loop = true;
         gotHit = false;
@@ -288,6 +286,7 @@ class Skull extends SpriteAnimationGroupComponent
               FlameAudio.bgm.stop();
             }
             removeFromParent();
+            game.bossKilled();
           },
         );
       }

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="40">
+ <tileset firstgid="1" source="Pixel Adventure.tsx"/>
+ <layer id="1" name="Background" width="40" height="23">
+  <properties>
+   <property name="BackgroundColor" value="Brown"/>
+  </properties>
+  <data encoding="csv">
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,
+24,24,24,92,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,93,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,95,96,97,0,0,0,0,0,0,0,0,95,96,97,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,95,96,97,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,95,96,97,0,117,118,119,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,117,118,119,0,117,118,119,0,0,0,0,0,0,0,117,118,119,0,0,0,0,0,0,0,0,117,118,119,111,24,24,24,
+24,24,24,113,0,0,0,0,139,140,141,0,139,140,141,0,0,0,0,0,0,0,139,140,141,0,0,0,0,0,0,0,0,139,140,141,111,24,24,24,
+24,24,24,114,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,115,24,24,24,
+24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24
+</data>
+ </layer>
+ <objectgroup id="3" name="Spawnpoints">
+  <object id="10" name="Ninja Frog" type="Player" x="80" y="304" width="32" height="32"/>
+  <object id="12" name="Checkpoint" type="Checkpoint" x="528" y="64" width="64" height="64"/>
+  <object id="13" name="Spikes" type="Spikes" x="240" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="14" name="Spikes" type="Spikes" x="256" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="15" name="Spikes" type="Spikes" x="272" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="16" name="Spikes" type="Spikes" x="288" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="17" name="Spikes" type="Spikes" x="304" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="18" name="Spikes" type="Spikes" x="320" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="19" name="Spikes" type="Spikes" x="336" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="20" name="Spikes" type="Spikes" x="400" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="21" name="Spikes" type="Spikes" x="416" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="22" name="Spikes" type="Spikes" x="432" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="23" name="Spikes" type="Spikes" x="448" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="24" name="Spikes" type="Spikes" x="464" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="25" name="Spikes" type="Spikes" x="480" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="26" name="Spikes" type="Spikes" x="496" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="27" name="Spikes" type="Spikes" x="512" y="320" width="16" height="16">
+   <properties>
+    <property name="isFlip" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="28" name="Falling Platforms" type="Falling Platforms" x="272" y="272" width="32" height="10"/>
+  <object id="29" name="Apple" type="Fruit" x="256" y="240" width="32" height="32"/>
+  <object id="30" name="Apple" type="Fruit" x="288" y="240" width="32" height="32"/>
+  <object id="34" name="Falling Platforms" type="Falling Platforms" x="448" y="224" width="32" height="10"/>
+  <object id="35" name="Apple" type="Fruit" x="432" y="192" width="32" height="32"/>
+  <object id="36" name="Apple" type="Fruit" x="464" y="192" width="32" height="32"/>
+  <object id="37" name="Bananas" type="Fruit" x="144" y="256" width="32" height="32"/>
+  <object id="38" name="Bananas" type="Fruit" x="208" y="160" width="32" height="32"/>
+  <object id="39" name="Bananas" type="Fruit" x="368" y="96" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="2" name="Collisions">
+  <object id="1" x="48" y="32" width="16" height="320"/>
+  <object id="2" x="48" y="32" width="544" height="16"/>
+  <object id="3" x="576" y="32" width="16" height="320"/>
+  <object id="4" x="48" y="336" width="544" height="16"/>
+  <object id="5" x="128" y="288" width="48" height="48"/>
+  <object id="6" x="192" y="192" width="48" height="144"/>
+  <object id="7" x="352" y="128" width="48" height="208"/>
+  <object id="8" x="528" y="128" width="48" height="208"/>
+ </objectgroup>
+</map>

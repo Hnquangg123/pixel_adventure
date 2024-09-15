@@ -26,7 +26,8 @@ enum PlayerState {
   falling,
   hit,
   appearing,
-  disappearing
+  disappearing,
+  doubleJump,
 }
 
 class Player extends SpriteAnimationGroupComponent
@@ -36,7 +37,10 @@ class Player extends SpriteAnimationGroupComponent
         CollisionCallbacks,
         FlameBlocListenable<ScoreBloc, ScoreState> {
   String character;
-  Player({position, this.character = 'Ninja Frog',}) : super(position: position);
+  Player({
+    position,
+    this.character = 'Mask Dude',
+  }) : super(position: position);
 
   double horizontalMovement = 0;
   double moveSpeed = 100;
@@ -60,12 +64,15 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation hitAnimation;
   late final SpriteAnimation appearingAnimation;
   late final SpriteAnimation disappearingAnimation;
+  late final SpriteAnimation doubleJumpAnimation;
 
   final double _gravity = 9.8;
   final double _jumpForce = 260;
+  final double _doubleJumpForce = 130;
   final double _terminalVelocity = 300;
   bool isOnGround = false;
   bool hasJumped = false;
+  bool doubleJump = false;
   bool gotHit = false;
   bool gotHitOneChecked = true;
   bool reachedCheckPoint = false;
@@ -118,6 +125,11 @@ class Player extends SpriteAnimationGroupComponent
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space) ||
         keysPressed.contains(LogicalKeyboardKey.arrowUp);
 
+    if (!isOnGround && !doubleJump) {
+      doubleJump = keysPressed.contains(LogicalKeyboardKey.space) ||
+          keysPressed.contains(LogicalKeyboardKey.arrowUp);
+    }
+
     return super.onKeyEvent(event, keysPressed);
   }
 
@@ -129,8 +141,10 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Saw || other is Spikes) _respawn();
       if (other is Chicken && !reachedCheckPoint) other.collidingWithPlayer();
       if (other is Checkpoint && !reachedCheckPoint) _reachedCheckPoint(false);
-      if (other is CheckpointEnd && !reachedCheckPoint) _reachedCheckPoint(true);
-      if (other is FallingPlatform && !reachedCheckPoint) other.collidingWithPlayer();
+      if (other is CheckpointEnd && !reachedCheckPoint)
+        _reachedCheckPoint(true);
+      if (other is FallingPlatform && !reachedCheckPoint)
+        other.collidingWithPlayer();
       if (other is Skull) {
         other.collidingWithPlayer();
       }
@@ -153,6 +167,8 @@ class Player extends SpriteAnimationGroupComponent
 
     disappearingAnimation = _specialSpriteAnimation('Desappearing', 7);
 
+    doubleJumpAnimation = _spriteAnimation('Double Jump', 6)..stepTime = 0.1;
+
     // List of all animations
     animations = {
       PlayerState.idle: idleAnimation,
@@ -162,6 +178,7 @@ class Player extends SpriteAnimationGroupComponent
       PlayerState.hit: hitAnimation,
       PlayerState.appearing: appearingAnimation,
       PlayerState.disappearing: disappearingAnimation,
+      PlayerState.doubleJump: doubleJumpAnimation,
     };
 
     // Set current animation
@@ -210,11 +227,16 @@ class Player extends SpriteAnimationGroupComponent
     // check if jumping
     if (velocity.y < 0) playerState = PlayerState.jumping;
 
+    // check if double jumping
+    // if (velocity.y < 0 && doubleJump) playerState = PlayerState.doubleJump;
+
     current = playerState;
   }
 
   void _updatePlayerMovement(double dt) {
     if (hasJumped && isOnGround) _playerJump(dt);
+
+    // if (doubleJump) _playerDoubleJump(dt);
 
     // if(velocity.y >_gravity ) isOnGround = false; optional
 
@@ -229,6 +251,14 @@ class Player extends SpriteAnimationGroupComponent
     position.y += velocity.y * dt;
     isOnGround = false;
     hasJumped = false;
+  }
+
+  void _playerDoubleJump(double dt) {
+    if (game.playSounds) FlameAudio.play('jump.wav', volume: game.soundVolume);
+
+      velocity.y = -_doubleJumpForce;
+      position.y += velocity.y * dt;
+      doubleJump = false;
   }
 
   void _checkHorizontalCollisions() {
@@ -365,4 +395,5 @@ class Player extends SpriteAnimationGroupComponent
     print(state.live);
     super.onNewState(state);
   }
+  
 }

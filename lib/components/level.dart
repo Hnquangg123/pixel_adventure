@@ -28,9 +28,12 @@ import 'package:pixel_adventure/components/spikes.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 import 'package:pixel_adventure/screens/choose_level_screen.dart';
 
-class Level extends World with HasGameRef<PixelAdventure>, FlameBlocListenable<LevelBloc, LevelState> {
+class Level extends World
+    with
+        HasGameRef<PixelAdventure>,
+        FlameBlocListenable<LevelBloc, LevelState> {
   final String levelName;
-  final Player player;
+  Player player;
   final bool isChooseLevel;
   final ScoreBloc scoreBloc;
   Level({
@@ -66,6 +69,8 @@ class Level extends World with HasGameRef<PixelAdventure>, FlameBlocListenable<L
         FlameAudio.bgm.stop();
       }
 
+      // _checkNextChapter();
+
       add(level);
 
       _addHud();
@@ -99,8 +104,11 @@ class Level extends World with HasGameRef<PixelAdventure>, FlameBlocListenable<L
       ),
       margin: const EdgeInsets.only(left: 8, bottom: 48),
     );
-    
-    game.cam.viewport.addAll([joystick, JumpButton(levelSizeX: level.size.x, levelSizeY: level.size.y)]);
+
+    game.cam.viewport.addAll([
+      joystick,
+      JumpButton(levelSizeX: level.size.x, levelSizeY: level.size.y)
+    ]);
     // addAll([joystick, JumpButton(level: this)]);
   }
 
@@ -145,9 +153,12 @@ class Level extends World with HasGameRef<PixelAdventure>, FlameBlocListenable<L
       for (final spawnPoint in spawmPointsLayer.objects) {
         switch (spawnPoint.class_) {
           case 'Player':
+            // if (game.changeCharacter) player = Player();
+            print('handle player in map');
             player.position = Vector2(spawnPoint.x, spawnPoint.y);
             player.scale.x = 1;
             player.startingPosition = Vector2(spawnPoint.x, spawnPoint.y);
+            player.character = spawnPoint.name;
             await add(
               FlameBlocProvider<ScoreBloc, ScoreState>.value(
                 value: scoreBloc,
@@ -237,8 +248,14 @@ class Level extends World with HasGameRef<PixelAdventure>, FlameBlocListenable<L
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
-
-            add(checkPointEnd);
+            await add(
+              FlameBlocProvider<LevelBloc, LevelState>.value(
+                value: game.levelBloc,
+                children: [
+                  checkPointEnd,
+                ],
+              ),
+            );
             break;
           default:
         }
@@ -308,5 +325,69 @@ class Level extends World with HasGameRef<PixelAdventure>, FlameBlocListenable<L
         ],
       ),
     );
+  }
+
+  // void _checkNextChapter() {
+  //   // Check whether reach next chapter to change character START
+  //   if (game.currentLevelIndex <= 10 && game.changeCharacter) {
+  //     game.reachChapterOne();
+  //   }
+  //   if (game.currentLevelIndex > 10 &&
+  //       game.currentLevelIndex <= 20 &&
+  //       game.changeCharacter) {
+  //     print('lets change chapter two');
+  //     game.reachChapterTwo();
+  //   }
+  //   if (game.currentLevelIndex > 20 &&
+  //       game.currentLevelIndex <= 30 &&
+  //       game.changeCharacter) {
+  //     game.reachChapterThree();
+  //   }
+  //   if (game.currentLevelIndex > 30 &&
+  //       game.currentLevelIndex <= 40 &&
+  //       game.changeCharacter) {
+  //     game.reachChapterFour();
+  //   }
+  //   if (game.currentLevelIndex > 40 &&
+  //       game.currentLevelIndex <= 50 &&
+  //       game.changeCharacter) {
+  //     game.reachChapterFive();
+  //   }
+  //   // Check whether reach next chapter to change character END
+  // }
+
+  @override
+  void onNewState(LevelState state) {
+    print('state init');
+
+    if (state.chapterOne && game.changeCharacter) {
+      player = Player(character: 'Mask Dude');
+      game.player = player;
+      game.changeCharacter = false;
+      print('say hello to mask dude! your level is: ' + game.currentLevelIndex.toString());
+    }
+    if (state.chapterTwo && game.changeCharacter) {
+      player = Player(character: 'Ninja Frog');
+      game.player = player;
+      game.changeCharacter = false;
+      print('say hello to ninja frog! your level is: ' + game.currentLevelIndex.toString());
+    }
+    if (state.chapterTwo && game.changeCharacter) {
+      player = Player(character: 'Pink Man');
+      game.player = player;
+      game.changeCharacter = false;
+    }
+    if (state.chapterTwo && game.changeCharacter) {
+      player = Player(character: 'Virtual Guy');
+      game.player = player;
+      game.changeCharacter = false;
+    }
+    if (state.chapterTwo && game.changeCharacter) {
+      player = Player(character: 'Mask Dude');
+      game.player = player;
+      game.changeCharacter = false;
+    }
+
+    super.onInitialState(state);
   }
 }

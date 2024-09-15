@@ -156,7 +156,7 @@
     <property name="offPos" type="float" value="0"/>
    </properties>
   </object>
-  <object id="39" name="Player" type="Player" x="80" y="96" width="32" height="32"/>
+  <object id="39" name="Mask Dude" type="Player" x="80" y="96" width="32" height="32"/>
   <object id="40" name="Bananas" type="Fruit" x="192" y="112" width="32" height="32"/>
   <object id="41" name="Bananas" type="Fruit" x="160" y="128" width="32" height="32"/>
   <object id="43" name="Orange" type="Fruit" x="288" y="112" width="32" height="32"/>

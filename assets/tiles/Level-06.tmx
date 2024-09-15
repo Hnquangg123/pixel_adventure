@@ -33,7 +33,7 @@
  </layer>
  <objectgroup id="2" name="Spawnpoints">
   <object id="1" name="Checkpoint" type="Checkpoint" x="512" y="80" width="64" height="64"/>
-  <object id="21" name="Player" type="Player" x="80" y="112" width="32" height="32"/>
+  <object id="21" name="Mask Dude" type="Player" x="80" y="112" width="32" height="32"/>
   <object id="24" name="Falling Platforms" type="Falling Platforms" x="208" y="144" width="32" height="10"/>
   <object id="26" name="Falling Platforms" type="Falling Platforms" x="272" y="144" width="32" height="10"/>
   <object id="27" name="Falling Platforms" type="Falling Platforms" x="336" y="144" width="32" height="10"/>
