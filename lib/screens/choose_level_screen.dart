@@ -40,7 +40,7 @@ class ChooseLevelScreen extends PositionComponent
 
       game.levelLength = groupLevel.objects.length;
 
-      for (final spawnPoint in groupLevel!.objects) {
+      for (final spawnPoint in groupLevel.objects) {
         switch (spawnPoint.class_) {
           case 'Level':
             // add text component render with spritefont

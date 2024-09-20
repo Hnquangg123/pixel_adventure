@@ -68,14 +68,18 @@ class Player extends SpriteAnimationGroupComponent
 
   final double _gravity = 9.8;
   final double _jumpForce = 260;
-  final double _doubleJumpForce = 130;
+  final double _doubleJumpForce = 260;
   final double _terminalVelocity = 300;
   bool isOnGround = false;
   bool hasJumped = false;
-  bool doubleJump = false;
+  bool hasDoubleJumped = false;
+  bool doubleJumpEnable = false;
   bool gotHit = false;
   bool gotHitOneChecked = true;
   bool reachedCheckPoint = false;
+  bool applyGravity = true;
+
+  final Duration timePermittedDoubleJump = const Duration(milliseconds: 100);
 
   @override
   FutureOr<void> onLoad() {
@@ -96,11 +100,11 @@ class Player extends SpriteAnimationGroupComponent
 
     while (accumulatedTime >= fixedDeltaTime) {
       if (!gotHit && !reachedCheckPoint) {
+        _checkVerticalCollisions();
         _updatePlayerState();
         _updatePlayerMovement(fixedDeltaTime);
         _checkHorizontalCollisions();
-        _applyGravity(fixedDeltaTime);
-        _checkVerticalCollisions();
+        applyGravity ? _applyGravity(fixedDeltaTime) : null;
       }
 
       accumulatedTime -= fixedDeltaTime;
@@ -125,11 +129,6 @@ class Player extends SpriteAnimationGroupComponent
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space) ||
         keysPressed.contains(LogicalKeyboardKey.arrowUp);
 
-    if (!isOnGround && !doubleJump) {
-      doubleJump = keysPressed.contains(LogicalKeyboardKey.space) ||
-          keysPressed.contains(LogicalKeyboardKey.arrowUp);
-    }
-
     return super.onKeyEvent(event, keysPressed);
   }
 
@@ -143,13 +142,19 @@ class Player extends SpriteAnimationGroupComponent
       if (other is Checkpoint && !reachedCheckPoint) _reachedCheckPoint(false);
       if (other is CheckpointEnd && !reachedCheckPoint)
         _reachedCheckPoint(true);
-      if (other is FallingPlatform && !reachedCheckPoint)
-        other.collidingWithPlayer();
       if (other is Skull) {
         other.collidingWithPlayer();
       }
     }
     super.onCollisionStart(intersectionPoints, other);
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    if (other is FallingPlatform && !reachedCheckPoint) {
+      applyGravity = true;
+    }
+    super.onCollisionEnd(other);
   }
 
   void _loadAllAnimations() {
@@ -167,7 +172,7 @@ class Player extends SpriteAnimationGroupComponent
 
     disappearingAnimation = _specialSpriteAnimation('Desappearing', 7);
 
-    doubleJumpAnimation = _spriteAnimation('Double Jump', 6)..stepTime = 0.1;
+    doubleJumpAnimation = _spriteAnimation('Double Jump', 6)..loop = false;
 
     // List of all animations
     animations = {
@@ -224,21 +229,27 @@ class Player extends SpriteAnimationGroupComponent
 
     if (velocity.y > 0) playerState = PlayerState.falling;
 
-    // check if jumping
-    if (velocity.y < 0) playerState = PlayerState.jumping;
+    // check if jumping & double jumping
+    if (velocity.y < 0 && !hasDoubleJumped) playerState = PlayerState.jumping;
 
-    // check if double jumping
-    // if (velocity.y < 0 && doubleJump) playerState = PlayerState.doubleJump;
+    if (velocity.y < 0 && hasDoubleJumped) playerState = PlayerState.doubleJump;
 
     current = playerState;
   }
 
   void _updatePlayerMovement(double dt) {
+
+    if (velocity.y == 0) {
+      isOnGround = true;
+      hasDoubleJumped = false;
+      doubleJumpEnable = false;
+    }
+
     if (hasJumped && isOnGround) _playerJump(dt);
 
-    // if (doubleJump) _playerDoubleJump(dt);
+    if (hasJumped && !isOnGround && !hasDoubleJumped && doubleJumpEnable && character == 'Ninja Frog') _playerDoubleJump(dt);
 
-    // if(velocity.y >_gravity ) isOnGround = false; optional
+    // if(velocity.y >_gravity ) isOnGround = false;
 
     velocity.x = horizontalMovement * moveSpeed;
     position.x += velocity.x * dt;
@@ -247,18 +258,30 @@ class Player extends SpriteAnimationGroupComponent
   void _playerJump(double dt) {
     if (game.playSounds) FlameAudio.play('jump.wav', volume: game.soundVolume);
 
+    print('first jump');
+
     velocity.y = -_jumpForce;
     position.y += velocity.y * dt;
     isOnGround = false;
     hasJumped = false;
+    Future.delayed(timePermittedDoubleJump, () => doubleJumpEnable = true,);
   }
 
-  void _playerDoubleJump(double dt) {
+  Future<void> _playerDoubleJump(double dt) async {
     if (game.playSounds) FlameAudio.play('jump.wav', volume: game.soundVolume);
 
-      velocity.y = -_doubleJumpForce;
-      position.y += velocity.y * dt;
-      doubleJump = false;
+    print('double jump');
+
+    velocity.y = -_doubleJumpForce;
+    position.y += velocity.y * dt;
+
+    hasJumped = false;
+    hasDoubleJumped = true;
+
+    // current = PlayerState.doubleJump;
+    // await animationTicker?.completed;
+    // animationTicker?.reset();
+    // hasDoubleJumped = false;
   }
 
   void _checkHorizontalCollisions() {
@@ -294,6 +317,7 @@ class Player extends SpriteAnimationGroupComponent
             velocity.y = 0;
             position.y = block.y - hitbox.height - hitbox.offsetY;
             isOnGround = true;
+            hasDoubleJumped = false;
             break;
           }
         }
@@ -303,6 +327,7 @@ class Player extends SpriteAnimationGroupComponent
             velocity.y = 0;
             position.y = block.y - hitbox.height - hitbox.offsetY;
             isOnGround = true;
+            hasDoubleJumped = false;
             break;
           }
           if (velocity.y < 0) {
@@ -395,5 +420,4 @@ class Player extends SpriteAnimationGroupComponent
     print(state.live);
     super.onNewState(state);
   }
-  
 }

@@ -18,6 +18,8 @@ class FallingPlatform extends SpriteAnimationComponent
   late RectangleHitbox blockHitbox;
   Vector2 velocity = Vector2.zero();
   bool isDrop = false;
+  double accumulatedTime = 0;
+  double fixedDeltaTime = 1 / 60;
 
   CustomHitBox hitbox = CustomHitBox(
     offsetX: 10,
@@ -53,17 +55,15 @@ class FallingPlatform extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
-    player.accumulatedTime += dt;
-    while (player.accumulatedTime >= player.fixedDeltaTime) {
-      _checkVerticalCollisions();
-      player.accumulatedTime -= player.fixedDeltaTime;
-    }
+    // player.accumulatedTime += dt;
+    // accumulatedTime = player.accumulatedTime;
+    // accumulatedTime += dt;
 
-    if (isDrop) {
-      velocity.y += _gravity;
-      velocity.y = velocity.y.clamp(260, 300);
-      position.y += velocity.y * dt;
-    }
+    _checkVerticalCollisions();
+    _checkPlatformDrop(dt);
+    // while (player.accumulatedTime >= fixedDeltaTime) {
+    //   player.accumulatedTime -= fixedDeltaTime;
+    // }
 
     super.update(dt);
   }
@@ -78,23 +78,23 @@ class FallingPlatform extends SpriteAnimationComponent
   }
 
   void collidingWithPlayer() async {
-      print('colliding platform');
+    print('colliding platform');
 
-      animation = SpriteAnimation.fromFrameData(
-        game.images.fromCache('Traps/Falling Platforms/Off.png'),
-        SpriteAnimationData.sequenced(
-          amount: 1,
-          stepTime: 0.05,
-          textureSize: Vector2(32, 10),
-        ),
-      );
+    animation = SpriteAnimation.fromFrameData(
+      game.images.fromCache('Traps/Falling Platforms/Off.png'),
+      SpriteAnimationData.sequenced(
+        amount: 1,
+        stepTime: 0.05,
+        textureSize: Vector2(32, 10),
+      ),
+    );
 
-      Future.delayed(
-        _durationGravityApplied,
-        () {
-          isDrop = true;
-        },
-      );
+    Future.delayed(
+      _durationGravityApplied,
+      () {
+        isDrop = true;
+      },
+    );
   }
 
   void _checkVerticalCollisions() {
@@ -104,12 +104,21 @@ class FallingPlatform extends SpriteAnimationComponent
       // print(width);
       // print(height);
       if (player.velocity.y > 0) {
-        print(player.velocity.y);
+        // print(player.velocity.y);
         player.velocity.y = 0;
         // print(position.y);
         player.position.y = y - hitbox.height - hitbox.offsetY;
         player.isOnGround = true;
+        player.applyGravity = false;
       }
+    }
+  }
+
+  void _checkPlatformDrop(dt) {
+    if (isDrop) {
+      velocity.y += _gravity;
+      velocity.y = velocity.y.clamp(260, 300);
+      position.y += velocity.y * dt;
     }
   }
 }

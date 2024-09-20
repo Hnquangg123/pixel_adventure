@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/text.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 

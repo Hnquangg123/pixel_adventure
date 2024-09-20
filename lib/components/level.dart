@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
@@ -59,9 +60,16 @@ class Level extends World
         if (game.currentLevelIndex == 10) {
           FlameAudio.bgm
               .play('Action 3 - Loop - Pure (Boss Fight).wav', volume: 0.25);
-        } else {
-          FlameAudio.bgm
-              .play('1-06. Dungeon (Spelunker Theme).mp3', volume: 0.25);
+        } else if (game.currentLevelIndex < 10) {
+          FlameAudio.bgm.play('Platformer 1 - Looped - Pure.wav', volume: 0.25);
+        } else if (game.currentLevelIndex > 10 && game.currentLevelIndex < 20) {
+          FlameAudio.bgm.play('Platformer 2 - Looped - Pure.wav', volume: 0.25);
+        } else if (game.currentLevelIndex > 20 && game.currentLevelIndex < 30) {
+          FlameAudio.bgm.play('Platformer 3 - Looped - Pure.wav', volume: 0.25);
+        } else if (game.currentLevelIndex > 30 && game.currentLevelIndex < 40) {
+          FlameAudio.bgm.play('Platformer 4 - Looped - Pure.wav', volume: 0.25);
+        } else if (game.currentLevelIndex > 40 && game.currentLevelIndex < 50) {
+          FlameAudio.bgm.play('Platformer 5 - Looped - Pure.wav', volume: 0.25);
         }
       }
 
@@ -364,13 +372,13 @@ class Level extends World
       player = Player(character: 'Mask Dude');
       game.player = player;
       game.changeCharacter = false;
-      print('say hello to mask dude! your level is: ' + game.currentLevelIndex.toString());
+      log('say hello to mask dude! your level is: ${game.currentLevelIndex}');
     }
     if (state.chapterTwo && game.changeCharacter) {
       player = Player(character: 'Ninja Frog');
       game.player = player;
       game.changeCharacter = false;
-      print('say hello to ninja frog! your level is: ' + game.currentLevelIndex.toString());
+      log('say hello to ninja frog! your level is: ${game.currentLevelIndex}');
     }
     if (state.chapterTwo && game.changeCharacter) {
       player = Player(character: 'Pink Man');
