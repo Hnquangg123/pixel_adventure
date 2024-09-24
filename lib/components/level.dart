@@ -18,6 +18,7 @@ import 'package:pixel_adventure/components/checkpoint_end.dart';
 import 'package:pixel_adventure/components/enemies/skull.dart';
 import 'package:pixel_adventure/components/enemies/chicken.dart';
 import 'package:pixel_adventure/components/falling_plaform.dart';
+import 'package:pixel_adventure/components/guide_arrow/guide_arrow.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/background_tile.dart';
@@ -264,6 +265,14 @@ class Level extends World
                 ],
               ),
             );
+            break;
+          case 'Guide Arrow':
+            final guideArrow = GuideArrow(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+              text: spawnPoint.name,
+            );
+            add(guideArrow);
             break;
           default:
         }
