@@ -50,6 +50,9 @@ class LevelState extends Equatable {
     );
   }
 
+  GameStatus bossStart() {
+    return GameStatus.initial;
+  }
   GameStatus bossOver() {
     return GameStatus.bossOver;
   }

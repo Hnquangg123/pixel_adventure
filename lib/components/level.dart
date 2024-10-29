@@ -267,10 +267,11 @@ class Level extends World
             );
             break;
           case 'Guide Arrow':
+            final text = spawnPoint.properties.getValue('text');
             final guideArrow = GuideArrow(
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
-              text: spawnPoint.name,
+              text: text,
             );
             add(guideArrow);
             break;

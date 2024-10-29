@@ -11,6 +11,7 @@ class GuideArrowDialog extends PositionComponent
   final double borderRadius;
   final double padding;
   final Paint borderPaint;
+  final double lineSpacing = 10;
   String text;
   late SpriteFontRenderer fontRenderer;
   late TextComponent textComponent;
@@ -91,22 +92,60 @@ class GuideArrowDialog extends PositionComponent
       letterSpacing: 0,
     );
 
-    textComponent = TextComponent(
-      text: text,
-      textRenderer: fontRenderer,
-    );
+    final lines = text.split('\n');
 
-    // Set position inside dialog box
-    textComponent.position = Vector2(padding, padding - 20);
+    print(lines);
+    print(lines);
 
-    // Calculate dialog box size based on text size and padding
-    final textSize = textComponent.size;
-    size = Vector2(textSize.x + 2 * padding, textSize.y + 2 * padding);
+    double currentY = -padding;
+    Vector2 longestText = Vector2.zero();
+    int numberOfLines = 0;
 
-    add(textComponent);
+    for (String line in lines) {
+      
+      line = normalizeText(line);
+      numberOfLines++;
+      // print(normalizeText(line));
+      // logUnicodeValues(normalizeText(line));
+
+      textComponent = TextComponent(
+        text: line,
+        textRenderer: fontRenderer,
+      );
+
+      final textSize = textComponent.size;
+
+      if (longestText.x < textSize.x) {
+        longestText = textSize;
+      }
+
+      // Set position inside dialog box
+      textComponent.position = Vector2(padding/2, currentY + lineSpacing);
+
+      // Calculate dialog box size based on text size and padding
+      size = longestText + Vector2(padding, (lineSpacing + textSize.y + 2) * numberOfLines);
+
+      currentY += textComponent.height + lineSpacing;
+
+      add(textComponent);
+    }
+
+    position -= Vector2(0, lineSpacing*numberOfLines);
 
     return super.onLoad();
   }
+
+  String normalizeText(String input) {
+    // Replace carriage return and line feed (`\r\n`) or just carriage return (`\r`) with a single new line (`\n`)
+    return input.replaceAll('\r', '');
+  }
+
+  void logUnicodeValues(String text) {
+  for (int i = 0; i < text.length; i++) {
+    final char = text[i];
+    print('Character: "$char" Unicode: ${char.codeUnitAt(0)}');
+  }
+}
 
   @override
   void render(Canvas canvas) {

@@ -110,6 +110,8 @@ class FallingPlatform extends SpriteAnimationComponent
         player.position.y = y - hitbox.height - hitbox.offsetY;
         player.isOnGround = true;
         player.applyGravity = false;
+        player.hasDoubleJumped = false;
+        player.doubleJumpEnable = false;
       }
     }
   }

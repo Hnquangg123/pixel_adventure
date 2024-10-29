@@ -5,6 +5,12 @@ abstract class LevelEvent extends Equatable {
   const LevelEvent();
 }
 
+class BossStart extends LevelEvent {
+  const BossStart();
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
 class BossKilled extends LevelEvent {
   const BossKilled();
 

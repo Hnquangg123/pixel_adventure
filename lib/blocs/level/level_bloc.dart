@@ -6,6 +6,11 @@ part 'level_state.dart';
 
 class LevelBloc extends Bloc<LevelEvent, LevelState> {
   LevelBloc() : super(const LevelState.empty()) {
+    on<BossStart>(
+      (event, emit) => emit(
+        state.copyWith(status: state.bossStart()),
+      ),
+    );
     on<BossKilled>(
       (event, emit) => emit(
         state.copyWith(status: state.bossOver()),

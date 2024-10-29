@@ -183,7 +183,7 @@
   <object id="2" x="48" y="32" width="16" height="288"/>
   <object id="3" x="48" y="32" width="544" height="16"/>
   <object id="4" x="576" y="32" width="16" height="288"/>
-  <object id="17" x="64" y="112" width="448" height="48"/>
+  <object id="17" x="64" y="112" width="448" height="32"/>
   <object id="18" x="128" y="208" width="448" height="48"/>
  </objectgroup>
 </map>

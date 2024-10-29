@@ -68,7 +68,7 @@ class Player extends SpriteAnimationGroupComponent
 
   final double _gravity = 9.8;
   final double _jumpForce = 260;
-  final double _doubleJumpForce = 260;
+  final double _doubleJumpForce = 210;
   final double _terminalVelocity = 300;
   bool isOnGround = false;
   bool hasJumped = false;
@@ -79,7 +79,7 @@ class Player extends SpriteAnimationGroupComponent
   bool reachedCheckPoint = false;
   bool applyGravity = true;
 
-  final Duration timePermittedDoubleJump = const Duration(milliseconds: 100);
+  final Duration timePermittedDoubleJump = const Duration(milliseconds: 150);
 
   @override
   FutureOr<void> onLoad() {
@@ -100,11 +100,11 @@ class Player extends SpriteAnimationGroupComponent
 
     while (accumulatedTime >= fixedDeltaTime) {
       if (!gotHit && !reachedCheckPoint) {
+        applyGravity ? _applyGravity(fixedDeltaTime) : null;
         _checkVerticalCollisions();
         _updatePlayerState();
         _updatePlayerMovement(fixedDeltaTime);
         _checkHorizontalCollisions();
-        applyGravity ? _applyGravity(fixedDeltaTime) : null;
       }
 
       accumulatedTime -= fixedDeltaTime;
@@ -238,16 +238,19 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _updatePlayerMovement(double dt) {
-
-    if (velocity.y == 0) {
-      isOnGround = true;
-      hasDoubleJumped = false;
-      doubleJumpEnable = false;
-    }
+    // if (velocity.y == 0) {
+    //   // isOnGround = true;
+    // hasDoubleJumped = false;
+    // doubleJumpEnable = false;
+    // }
 
     if (hasJumped && isOnGround) _playerJump(dt);
 
-    if (hasJumped && !isOnGround && !hasDoubleJumped && doubleJumpEnable && character == 'Ninja Frog') _playerDoubleJump(dt);
+    if (hasJumped &&
+        !isOnGround &&
+        !hasDoubleJumped &&
+        doubleJumpEnable &&
+        character == 'Ninja Frog') _playerDoubleJump(dt);
 
     // if(velocity.y >_gravity ) isOnGround = false;
 
@@ -264,7 +267,10 @@ class Player extends SpriteAnimationGroupComponent
     position.y += velocity.y * dt;
     isOnGround = false;
     hasJumped = false;
-    Future.delayed(timePermittedDoubleJump, () => doubleJumpEnable = true,);
+    Future.delayed(
+      timePermittedDoubleJump,
+      () => doubleJumpEnable = true,
+    );
   }
 
   Future<void> _playerDoubleJump(double dt) async {
@@ -289,11 +295,13 @@ class Player extends SpriteAnimationGroupComponent
       if (!block.isPlatform) {
         if (checkCollision(this, block)) {
           if (velocity.x > 0) {
+            print('x>0');
             velocity.x = 0;
             position.x = block.x - hitbox.offsetX - hitbox.width;
             break;
           }
           if (velocity.x < 0) {
+            print('x<0');
             velocity.x = 0;
             position.x = block.x + block.width + hitbox.offsetX + hitbox.width;
             break;
@@ -318,21 +326,26 @@ class Player extends SpriteAnimationGroupComponent
             position.y = block.y - hitbox.height - hitbox.offsetY;
             isOnGround = true;
             hasDoubleJumped = false;
+            doubleJumpEnable = false;
             break;
           }
         }
       } else {
         if (checkCollision(this, block)) {
           if (velocity.y > 0) {
+            print('y>0');
             velocity.y = 0;
             position.y = block.y - hitbox.height - hitbox.offsetY;
             isOnGround = true;
             hasDoubleJumped = false;
+            doubleJumpEnable = false;
             break;
           }
           if (velocity.y < 0) {
+            print('y<0');
             velocity.y = 0;
             position.y = block.y + block.height - hitbox.offsetY;
+            break;
           }
         }
       }

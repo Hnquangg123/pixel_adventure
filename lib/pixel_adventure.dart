@@ -39,7 +39,7 @@ class PixelAdventure extends FlameGame
   late Player player;
   late CameraComponent cam;
   // late JoystickComponent joystick;
-  bool showControls = false;
+  bool showControls = true;
   bool playSounds = false;
   double soundVolume = 1.0;
   bool changeCharacter = false;
@@ -391,6 +391,10 @@ class PixelAdventure extends FlameGame
   }
 
   // Manage State Level
+
+  void bossStart() {
+    levelBloc.add(const BossStart());
+  }
 
   void bossKilled() {
     levelBloc.add(const BossKilled());

@@ -30,7 +30,8 @@ class CheckpointEnd extends SpriteAnimationComponent
         textureSize: Vector2.all(64),
       ),
     );
-
+    
+    game.bossStart();
     isVisible = false;
 
     return super.onLoad();

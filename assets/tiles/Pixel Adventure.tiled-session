@@ -22,8 +22,8 @@
         },
         "Level-01.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
             "scale": 1,
             "selectedLayer": 2,
@@ -34,8 +34,8 @@
         },
         "Level-02.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
             "scale": 1,
             "selectedLayer": 1,
@@ -46,8 +46,8 @@
         },
         "Level-03.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
             "scale": 1,
             "selectedLayer": 2,
@@ -70,8 +70,8 @@
         },
         "Level-05.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
             "scale": 1.141484375,
             "selectedLayer": 2,
@@ -93,8 +93,8 @@
         },
         "Level-07.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
             "scale": 1.141484375,
             "selectedLayer": 1,
@@ -116,6 +116,7 @@
         },
         "Level-09.tmx": {
             "expandedObjectLayers": [
+                3,
                 2
             ],
             "scale": 1.14,
@@ -127,8 +128,8 @@
         },
         "Level-10.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
             "scale": 1.141484375,
             "selectedLayer": 1,
@@ -139,14 +140,14 @@
         },
         "Level-11.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 320,
-                "y": 183.5
+                "x": 338.5,
+                "y": 205
             }
         },
         "Pixel Adventure.tsx": {
@@ -187,7 +188,7 @@
         "Choose-Level.tmx"
     ],
     "project": "Pixel Adventure.tiled-project",
-    "property.type": "float",
+    "property.type": "string",
     "recentFiles": [
         "Pixel Adventure.tsx",
         "Level-01.tmx",
@@ -202,6 +203,7 @@
         "Level-10.tmx",
         "Choose-Level.tmx"
     ],
+    "textEdit.monospace": false,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,
